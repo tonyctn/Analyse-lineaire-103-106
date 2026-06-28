@@ -1,0 +1,2234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Livret d'Études Linéaires – Bac de Français</title>
+<meta name="description" content="Livret d'analyses linéaires pour le bac de français : Corneille, Fontenelle, Rimbaud, Prévost. Avec introductions, textes, analyses et conclusions.">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ===== CSS VARIABLES – LIGHT ===== */
+  :root {
+    --bg: #f5f5f0;
+    --surface: #ffffff;
+    --surface2: #f8f8fc;
+    --surface3: #f0f4ff;
+    --text: #1a1a2e;
+    --text-muted: #666680;
+    --text-light: #999aaa;
+    --border: #eeeeee;
+    --border2: #e0e0ee;
+    --shadow: rgba(0,0,0,0.08);
+    --cover-text: #ffffff;
+    --label-color: #888899;
+    --prob-bg: #fff9e6;
+    --prob-border: #f0d060;
+    --prob-label: #b8860b;
+    --prob-text: #555566;
+    --conc-bg: #ffffff;
+    --intro-bg: #f8f9ff;
+    --toggle-bg: #1a1a2e;
+    --toggle-text: #ffffff;
+    --num-shadow: rgba(0,0,0,0.2);
+    --accord-header-bg: #f0f4ff;
+    --accord-border: #d0d8f0;
+    --accord-arrow: #1a1a2e;
+  }
+
+  /* ===== CSS VARIABLES – DARK ===== */
+  body.dark {
+    --bg: #0e0e1a;
+    --surface: #1a1a2e;
+    --surface2: #161628;
+    --surface3: #1e1e38;
+    --text: #e8e8f5;
+    --text-muted: #9999cc;
+    --text-light: #666688;
+    --border: #2a2a44;
+    --border2: #222236;
+    --shadow: rgba(0,0,0,0.4);
+    --cover-text: #ffffff;
+    --label-color: #7777aa;
+    --prob-bg: #2a2410;
+    --prob-border: #806020;
+    --prob-label: #d4a030;
+    --prob-text: #bbbbcc;
+    --conc-bg: #1e1e34;
+    --intro-bg: #1a1a30;
+    --toggle-bg: #e8e8f5;
+    --toggle-text: #1a1a2e;
+    --num-shadow: rgba(0,0,0,0.5);
+    --accord-header-bg: #1e1e38;
+    --accord-border: #2a2a50;
+    --accord-arrow: #e8e8f5;
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--text);
+    background: var(--bg);
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* ===== DARK MODE TOGGLE ===== */
+  .mode-toggle {
+    position: fixed; top: 18px; right: 18px; z-index: 1000;
+    background: var(--toggle-bg); color: var(--toggle-text);
+    border: none; border-radius: 30px; padding: 9px 18px;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    display: flex; align-items: center; gap: 7px;
+    transition: all 0.3s;
+  }
+  .mode-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.35); }
+
+  /* ===== COVER ===== */
+  .cover {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 80px 40px; color: white; position: relative;
+  }
+  .cover-badge {
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 30px; padding: 6px 22px; font-size: 11px;
+    letter-spacing: 3px; text-transform: uppercase; margin-bottom: 40px; color: #a8d8ea;
+  }
+  .cover h1 {
+    font-family: Georgia, serif; font-size: 48px; font-weight: 700;
+    line-height: 1.2; margin-bottom: 20px; text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  }
+  .cover h1 span { color: #e8c547; }
+  .cover .subtitle {
+    font-size: 18px; font-weight: 300; color: rgba(255,255,255,0.8); margin-bottom: 50px;
+  }
+
+  /* ===== AUTHOR CARDS (HOME) ===== */
+  .home-authors {
+    display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+    margin-bottom: 40px; max-width: 900px; width: 100%;
+  }
+  .home-author-card {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 16px; padding: 22px 28px; text-align: left; cursor: pointer;
+    flex: 1; min-width: 180px; max-width: 220px;
+    transition: all 0.25s; text-decoration: none; color: white;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .home-author-card:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+  }
+  .home-author-card .name { font-weight: 700; font-size: 16px; color: #e8c547; }
+  .home-author-card .work { font-size: 12px; color: rgba(255,255,255,0.7); }
+  .home-author-card .year { font-size: 11px; color: rgba(255,255,255,0.5); }
+  .home-author-card .arrow {
+    margin-top: 10px; font-size: 18px; color: rgba(255,255,255,0.4);
+    transition: transform 0.2s;
+  }
+  .home-author-card:hover .arrow { transform: translateX(4px); color: #e8c547; }
+
+  .cover-all-btn {
+    background: rgba(232,197,71,0.18); border: 1px solid rgba(232,197,71,0.5);
+    color: #e8c547; border-radius: 30px; padding: 12px 30px;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    transition: all 0.25s; letter-spacing: 1px; text-decoration: none;
+    display: inline-block; margin-top: 10px;
+  }
+  .cover-all-btn:hover {
+    background: rgba(232,197,71,0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(232,197,71,0.3);
+  }
+
+  /* ===== LAYOUT ===== */
+  .container { max-width: 920px; margin: 0 auto; padding: 40px 20px; }
+
+  /* ===== PAGES ===== */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ===== BACK BUTTON ===== */
+  .back-bar {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 14px 20px; position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; gap: 14px;
+    box-shadow: 0 2px 12px var(--shadow); transition: background 0.3s;
+  }
+  .back-btn {
+    background: none; border: 1px solid var(--border2); color: var(--text);
+    border-radius: 20px; padding: 6px 16px; font-size: 12px; cursor: pointer;
+    display: flex; align-items: center; gap: 6px; transition: all 0.2s;
+    font-weight: 600;
+  }
+  .back-btn:hover { background: var(--surface2); transform: translateX(-2px); }
+  .back-bar-title { font-size: 14px; font-weight: 700; color: var(--text); }
+  .back-bar-sub { font-size: 11px; color: var(--text-light); margin-left: auto; }
+
+  /* ===== AUTHOR PAGE ===== */
+  .author-hero {
+    border-radius: 20px; padding: 40px 44px; margin: 30px 0 30px;
+    color: white; position: relative; overflow: hidden;
+  }
+  .author-hero::before {
+    content: ''; position: absolute; top: -50px; right: -50px;
+    width: 220px; height: 220px; border-radius: 50%; background: rgba(255,255,255,0.07);
+  }
+  .author-hero.corneille { background: linear-gradient(135deg, #1a3a4a 0%, #0d5c8a 100%); }
+  .author-hero.fontenelle { background: linear-gradient(135deg, #2d1b4e 0%, #6a3093 100%); }
+  .author-hero.rimbaud { background: linear-gradient(135deg, #1a3a2a 0%, #2d7a4a 100%); }
+  .author-hero.prevost { background: linear-gradient(135deg, #4a1a1a 0%, #922020 100%); }
+
+  .author-hero-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 8px; }
+  .author-hero-name { font-family: Georgia, serif; font-size: 30px; font-weight: 700; margin-bottom: 4px; }
+  .author-hero-work { font-size: 14px; color: rgba(255,255,255,0.68); margin-bottom: 22px; }
+
+  .author-intro-card {
+    background: rgba(255,255,255,0.1); border-radius: 12px; padding: 20px 22px;
+    margin-bottom: 18px; font-size: 13px; line-height: 1.75; position: relative; z-index: 1;
+  }
+  .author-intro-card p { color: rgba(255,255,255,0.92); }
+
+  .author-meta-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    background: rgba(255,255,255,0.1); border-radius: 12px; padding: 18px;
+    position: relative; z-index: 1;
+  }
+  .meta-item label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(255,255,255,0.5); display: block; margin-bottom: 4px;
+  }
+  .meta-item p { font-size: 12.5px; color: rgba(255,255,255,0.9); }
+  .meta-item.full { grid-column: 1 / -1; }
+  .mots-cles { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
+  .mot-cle {
+    background: rgba(255,255,255,0.18); border-radius: 20px;
+    padding: 3px 10px; font-size: 11px; color: rgba(255,255,255,0.9);
+  }
+
+  /* ===== TEXT LIST ON AUTHOR PAGE ===== */
+  .texts-list-title {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-light); margin: 28px 0 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .texts-list-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .text-card {
+    background: var(--surface); border-radius: 14px;
+    box-shadow: 0 3px 18px var(--shadow); margin-bottom: 14px;
+    padding: 18px 22px; cursor: pointer;
+    display: flex; align-items: center; gap: 16px;
+    transition: all 0.22s; border: 1px solid var(--border);
+    text-decoration: none; color: var(--text);
+  }
+  .text-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 6px 28px var(--shadow);
+    border-color: var(--border2);
+  }
+  .text-card-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: white; flex-shrink: 0;
+  }
+  .text-card-num.corneille { background: linear-gradient(135deg, #1a6fa8, #3d9de0); }
+  .text-card-num.fontenelle { background: linear-gradient(135deg, #6a3093, #a040d0); }
+  .text-card-num.rimbaud { background: linear-gradient(135deg, #1a7a40, #3db870); }
+  .text-card-num.prevost { background: linear-gradient(135deg, #8b1515, #cc2c2c); }
+
+  .text-card-info { flex: 1; }
+  .text-card-ref { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); margin-bottom: 3px; }
+  .text-card-title { font-family: Georgia, serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .text-card-prob { font-size: 11.5px; color: var(--text-muted); font-style: italic; }
+  .text-card-arrow { font-size: 20px; color: var(--text-light); transition: transform 0.2s; }
+  .text-card:hover .text-card-arrow { transform: translateX(4px); color: var(--text); }
+
+  /* ===== TEXT PAGE ===== */
+  .text-page-header {
+    background: var(--surface); border-radius: 16px;
+    box-shadow: 0 4px 30px var(--shadow); margin-bottom: 20px;
+    overflow: hidden; transition: background 0.3s, box-shadow 0.3s;
+  }
+
+  /* ===== ACCORDION ===== */
+  .accord {
+    border: 1px solid var(--accord-border);
+    border-radius: 12px; margin-bottom: 12px; overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .accord-header {
+    background: var(--accord-header-bg); padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; user-select: none; transition: background 0.2s;
+  }
+  .accord-header:hover { background: var(--surface3); }
+  .accord-header-left { display: flex; align-items: center; gap: 12px; }
+  .accord-icon {
+    width: 28px; height: 28px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0;
+  }
+  .accord-title { font-size: 13px; font-weight: 700; color: var(--text); }
+  .accord-subtitle { font-size: 11px; color: var(--text-light); margin-top: 1px; }
+  .accord-arrow {
+    font-size: 16px; color: var(--accord-arrow); transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+  .accord.open .accord-arrow { transform: rotate(180deg); }
+  .accord-body {
+    max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+  }
+  .accord.open .accord-body { max-height: 9999px; }
+  .accord-inner { padding: 20px 22px; border-top: 1px solid var(--accord-border); }
+
+  /* ===== Specific accord icon colors ===== */
+  .accord-icon.intro-author { background: #e8f4ff; color: #1a6fa8; }
+  .accord-icon.intro-text { background: #f0e8ff; color: #6a3093; }
+  .accord-icon.text-full { background: #fff8e1; color: #b8860b; }
+  .accord-icon.movement { background: #e8fff0; color: #1a7a40; }
+  .accord-icon.conclusion { background: #fff0f0; color: #8b1515; }
+  .accord-icon.extra { background: #f5f5f5; color: #555566; }
+
+  body.dark .accord-icon.intro-author { background: #1a2e3a; color: #60a8d8; }
+  body.dark .accord-icon.intro-text { background: #2a1e3a; color: #c080f0; }
+  body.dark .accord-icon.text-full { background: #2a2410; color: #d4a030; }
+  body.dark .accord-icon.movement { background: #1a2e20; color: #50c870; }
+  body.dark .accord-icon.conclusion { background: #2a1818; color: #cc4040; }
+  body.dark .accord-icon.extra { background: #202030; color: #9999cc; }
+
+  /* ===== SECTION LABELS ===== */
+  .section-label {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-light); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ===== INTRO BLOCK ===== */
+  .intro-full {
+    background: var(--intro-bg); border-radius: 10px;
+    padding: 14px 18px; margin-bottom: 10px;
+    font-size: 13px; color: var(--text); line-height: 1.7;
+    border: 1px solid var(--border2);
+    transition: background 0.3s;
+  }
+  .intro-keywords {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 8px; margin-bottom: 10px;
+  }
+  .intro-kw-item {
+    background: var(--surface2); border-radius: 8px;
+    padding: 10px 13px; border: 1px solid var(--border);
+    border-left: 3px solid; transition: background 0.3s;
+  }
+  .intro-kw-item.corneille { border-left-color: #0d5c8a; }
+  .intro-kw-item.fontenelle { border-left-color: #6a3093; }
+  .intro-kw-item.rimbaud { border-left-color: #2d7a4a; }
+  .intro-kw-item.prevost { border-left-color: #922020; }
+  .intro-kw-item .kw-label {
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--label-color); margin-bottom: 3px;
+  }
+  .intro-kw-item p { font-size: 12px; color: var(--text-muted); }
+
+  .problematique-box {
+    background: var(--prob-bg); border: 1px solid var(--prob-border);
+    border-radius: 8px; padding: 11px 16px; margin-top: 2px;
+    transition: background 0.3s;
+  }
+  .problematique-box .prob-label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--prob-label); margin-bottom: 3px;
+  }
+  .problematique-box p { font-size: 12.5px; font-style: italic; color: var(--prob-text); }
+
+  /* Problematique visible directement */
+  .prob-visible {
+    background: var(--prob-bg); border: 2px solid var(--prob-border);
+    border-radius: 10px; padding: 14px 18px; margin: 0;
+    transition: background 0.3s;
+  }
+  .prob-visible .prob-label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--prob-label); margin-bottom: 6px; font-weight: 700;
+  }
+  .prob-visible p { font-size: 13px; font-style: italic; color: var(--prob-text); line-height: 1.65; }
+
+  /* ===== TEXTE INTÉGRAL ===== */
+  .texte-integral {
+    font-family: Georgia, serif; font-size: 13px; line-height: 2.1;
+    color: var(--text); white-space: pre-wrap;
+    background: var(--surface2); border-radius: 8px;
+    padding: 18px 22px; border: 1px solid var(--border2);
+    transition: background 0.3s;
+  }
+
+  /* ===== COLOR SYSTEM ===== */
+  .m1p1 { background: #dbeeff; border-radius: 3px; padding: 1px 3px; }
+  .m1p2 { background: #b8deff; border-radius: 3px; padding: 1px 3px; }
+  .m1p3 { background: #8ec8ff; border-radius: 3px; padding: 1px 3px; }
+  .m1p4 { background: #64b0f0; border-radius: 3px; padding: 1px 3px; }
+  .m1p5 { background: #a0ccf5; border-radius: 3px; padding: 1px 3px; }
+  .m1p6 { background: #c8e4ff; border-radius: 3px; padding: 1px 3px; }
+  .m2p1 { background: #d4f5df; border-radius: 3px; padding: 1px 3px; }
+  .m2p2 { background: #a8ebc0; border-radius: 3px; padding: 1px 3px; }
+  .m2p3 { background: #78dfa0; border-radius: 3px; padding: 1px 3px; }
+  .m2p4 { background: #50d080; border-radius: 3px; padding: 1px 3px; }
+  .m2p5 { background: #90e8b0; border-radius: 3px; padding: 1px 3px; }
+  .m2p6 { background: #beedd0; border-radius: 3px; padding: 1px 3px; }
+  .m3p1 { background: #ffe8cc; border-radius: 3px; padding: 1px 3px; }
+  .m3p2 { background: #ffd0a0; border-radius: 3px; padding: 1px 3px; }
+  .m3p3 { background: #ffb870; border-radius: 3px; padding: 1px 3px; }
+  .m3p4 { background: #ff9940; border-radius: 3px; padding: 1px 3px; }
+  .m3p5 { background: #ffc080; border-radius: 3px; padding: 1px 3px; }
+  .m3p6 { background: #ffe0b8; border-radius: 3px; padding: 1px 3px; }
+  .m4p1 { background: #f0e0ff; border-radius: 3px; padding: 1px 3px; }
+  .m4p2 { background: #e0c0ff; border-radius: 3px; padding: 1px 3px; }
+  .m4p3 { background: #c898ff; border-radius: 3px; padding: 1px 3px; }
+  .m4p4 { background: #b070f0; border-radius: 3px; padding: 1px 3px; }
+  .m4p5 { background: #d8a8ff; border-radius: 3px; padding: 1px 3px; }
+  .m5p1 { background: #ffe0e0; border-radius: 3px; padding: 1px 3px; }
+  .m5p2 { background: #ffc0c0; border-radius: 3px; padding: 1px 3px; }
+  .m5p3 { background: #ff9898; border-radius: 3px; padding: 1px 3px; }
+  .m5p4 { background: #ff7070; border-radius: 3px; padding: 1px 3px; }
+  .m5p5 { background: #ffb0b0; border-radius: 3px; padding: 1px 3px; }
+
+  body.dark .m1p1 { background: #1a3a5e; color: #cce4ff; }
+  body.dark .m1p2 { background: #153050; color: #b8daff; }
+  body.dark .m1p3 { background: #102844; color: #a0ccff; }
+  body.dark .m1p4 { background: #0c2038; color: #88bbff; }
+  body.dark .m1p5 { background: #183456; color: #b0d4ff; }
+  body.dark .m1p6 { background: #1c3c60; color: #c0dcff; }
+  body.dark .m2p1 { background: #1a3d28; color: #b0f0c8; }
+  body.dark .m2p2 { background: #153320; color: #98e8b8; }
+  body.dark .m2p3 { background: #102818; color: #80e0a8; }
+  body.dark .m2p4 { background: #0c2014; color: #68d898; }
+  body.dark .m2p5 { background: #18382a; color: #a8eccc; }
+  body.dark .m2p6 { background: #1c3c30; color: #b8f0d8; }
+  body.dark .m3p1 { background: #3d2a10; color: #ffd0a0; }
+  body.dark .m3p2 { background: #332208; color: #ffb880; }
+  body.dark .m3p3 { background: #281a04; color: #ffa060; }
+  body.dark .m3p4 { background: #201400; color: #ff8840; }
+  body.dark .m3p5 { background: #382408; color: #ffb870; }
+  body.dark .m3p6 { background: #3c2c14; color: #ffcc90; }
+  body.dark .m4p1 { background: #2d1a4a; color: #e0c8ff; }
+  body.dark .m4p2 { background: #24143e; color: #d0b0ff; }
+  body.dark .m4p3 { background: #1c0e30; color: #b898ff; }
+  body.dark .m4p4 { background: #140824; color: #a080f0; }
+  body.dark .m4p5 { background: #281840; color: #d0a8ff; }
+  body.dark .m5p1 { background: #4a1010; color: #ffcccc; }
+  body.dark .m5p2 { background: #3e0c0c; color: #ffb8b8; }
+  body.dark .m5p3 { background: #320808; color: #ff9898; }
+  body.dark .m5p4 { background: #280404; color: #ff8080; }
+  body.dark .m5p5 { background: #440e0e; color: #ffbbbb; }
+
+  /* ===== ANALYSE ===== */
+  .mouvement-block { margin-bottom: 26px; }
+  .mouvement-title {
+    font-weight: 700; font-size: 13px; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 14px; border-radius: 8px; color: white;
+  }
+  .mouvement-title.mvt1 { background: linear-gradient(90deg, #1a6fa8, #3d9de0); }
+  .mouvement-title.mvt2 { background: linear-gradient(90deg, #1a7a40, #3db870); }
+  .mouvement-title.mvt3 { background: linear-gradient(90deg, #c05800, #f07820); }
+  .mouvement-title.mvt4 { background: linear-gradient(90deg, #6a1090, #a040d0); }
+  .mouvement-title.mvt5 { background: linear-gradient(90deg, #8b1515, #cc2c2c); }
+  .mouvement-title span { opacity: 0.75; font-weight: 400; font-size: 11px; }
+
+  .procede-row {
+    display: grid; grid-template-columns: 26px 1fr;
+    gap: 10px; margin-bottom: 8px; padding: 10px 13px;
+    border-radius: 8px; background: var(--surface2);
+    border: 1px solid var(--border); align-items: start;
+    transition: background 0.3s;
+  }
+  .procede-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: white; flex-shrink: 0;
+    margin-top: 2px; box-shadow: 0 2px 5px var(--num-shadow);
+  }
+  .n1.mvt1{background:#3d9de0} .n2.mvt1{background:#2888cc} .n3.mvt1{background:#1a74b8}
+  .n4.mvt1{background:#0d60a4} .n5.mvt1{background:#1e7ec0} .n6.mvt1{background:#3292d0}
+  .n1.mvt2{background:#3db870} .n2.mvt2{background:#28a05c} .n3.mvt2{background:#1a8848}
+  .n4.mvt2{background:#0d7034} .n5.mvt2{background:#22962e} .n6.mvt2{background:#35aa58}
+  .n1.mvt3{background:#f07820} .n2.mvt3{background:#dc6010} .n3.mvt3{background:#c84800}
+  .n4.mvt3{background:#b43000} .n5.mvt3{background:#e06008} .n6.mvt3{background:#f07018}
+  .n1.mvt4{background:#a040d0} .n2.mvt4{background:#8c28bc} .n3.mvt4{background:#7810a8}
+  .n4.mvt4{background:#640094} .n5.mvt4{background:#9030c0}
+  .n1.mvt5{background:#cc2c2c} .n2.mvt5{background:#b81818} .n3.mvt5{background:#a40404}
+  .n4.mvt5{background:#900000} .n5.mvt5{background:#be2020}
+
+  .procede-citation { font-family: Georgia, serif; font-style: italic; }
+  .procede-ref { color: var(--text-light); margin: 0 5px; font-style: normal; font-family: Arial; font-size: 11px; }
+  .procede-analyse { display: block; margin-top: 5px; font-size: 12.5px; color: var(--text-muted); }
+  .procede-type { font-weight: 700; color: var(--text); }
+
+  /* ===== CONCLUSION ===== */
+  .conclusion-full {
+    font-size: 13px; color: var(--text); line-height: 1.7;
+    padding: 14px 18px; background: var(--surface2);
+    border-radius: 10px; border: 1px solid var(--border2);
+    margin-bottom: 12px; transition: background 0.3s;
+  }
+  .conclusion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .conclusion-item {
+    background: var(--conc-bg); border-radius: 8px; padding: 11px 13px;
+    border: 1px solid var(--border); transition: background 0.3s;
+  }
+  .conclusion-item .conc-label {
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--label-color); margin-bottom: 3px;
+  }
+  .conclusion-item p { font-size: 12px; color: var(--text-muted); }
+
+  /* ===== LEGEND ===== */
+  .legend-box {
+    background: var(--surface); border-radius: 12px; padding: 16px 20px;
+    margin-bottom: 20px; box-shadow: 0 2px 15px var(--shadow);
+    transition: background 0.3s;
+  }
+  .legend-title {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-light); margin-bottom: 10px;
+  }
+  .legend-items { display: flex; flex-wrap: wrap; gap: 8px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); }
+  .legend-swatch { width: 24px; height: 14px; border-radius: 3px; }
+
+  /* ===== ALL TEXTS PAGE ===== */
+  .all-section-title {
+    font-family: Georgia, serif; font-size: 20px; color: var(--text); margin-bottom: 14px;
+    padding: 14px 0 10px; border-bottom: 2px solid var(--border);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .cover h1 { font-size: 32px; }
+    .author-hero { padding: 28px 22px; }
+    .author-hero-name { font-size: 22px; }
+    .author-meta-grid { grid-template-columns: 1fr; }
+    .conclusion-grid { grid-template-columns: 1fr; }
+    .home-author-card { min-width: 140px; }
+  }
+
+  /* ===== PRINT ===== */
+  @media print {
+    body { background: white; font-size: 11px; }
+    .mode-toggle, .back-bar { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<button class="mode-toggle no-print" id="modeBtn">🌙 Mode Sombre</button>
+
+<!-- ======================================================
+     PAGE : ACCUEIL
+     ====================================================== -->
+<div id="page-home" class="page active">
+  <div class="cover">
+    <div class="cover-badge">Baccalauréat de Français · Analyses Linéaires</div>
+    <h1>Livret d'<span>Études</span><br>Linéaires</h1>
+    <p class="subtitle">Corneille · Fontenelle · Rimbaud · Prévost</p>
+
+    <div class="home-authors">
+      <a class="home-author-card" href="#" onclick="showAuthor('corneille'); return false;" id="card-corneille">
+        <div class="name">Pierre Corneille</div>
+        <div class="work">Le Menteur</div>
+        <div class="year">1644 — 3 textes</div>
+        <div class="arrow">→</div>
+      </a>
+      <a class="home-author-card" href="#" onclick="showAuthor('fontenelle'); return false;" id="card-fontenelle">
+        <div class="name">Fontenelle</div>
+        <div class="work">Entretiens sur la pluralité des mondes</div>
+        <div class="year">1686 — 3 textes</div>
+        <div class="arrow">→</div>
+      </a>
+      <a class="home-author-card" href="#" onclick="showAuthor('rimbaud'); return false;" id="card-rimbaud">
+        <div class="name">Arthur Rimbaud</div>
+        <div class="work">Cahiers de Douai</div>
+        <div class="year">1870 — 3 textes</div>
+        <div class="arrow">→</div>
+      </a>
+      <a class="home-author-card" href="#" onclick="showAuthor('prevost'); return false;" id="card-prevost">
+        <div class="name">Abbé Prévost</div>
+        <div class="work">Manon Lescaut</div>
+        <div class="year">1731 — 3 textes</div>
+        <div class="arrow">→</div>
+      </a>
+    </div>
+
+    <a class="cover-all-btn" href="#" onclick="showPage('page-all'); return false;">
+      📚 Voir l'intégralité du livret
+    </a>
+  </div>
+</div>
+
+<!-- ======================================================
+     PAGE : AUTEUR – CORNEILLE
+     ====================================================== -->
+<div id="page-author-corneille" class="page">
+  <div class="back-bar">
+    <button class="back-btn" onclick="showPage('page-home')">← Accueil</button>
+    <div class="back-bar-title">Pierre Corneille</div>
+    <div class="back-bar-sub">Le Menteur · 3 textes</div>
+  </div>
+  <div class="container">
+    <div class="author-hero corneille">
+      <div class="author-hero-label">Œuvre n°1</div>
+      <div class="author-hero-name">Pierre Corneille</div>
+      <div class="author-hero-work">Le Menteur (1644) — Comédie en cinq actes et en vers</div>
+      <div class="author-intro-card">
+        <p>Pierre Corneille (1606-1684) est l'un des piliers du classicisme français. Dramaturge normand, il est surtout célèbre pour ses grandes tragédies comme <em>Le Cid</em> (1637), <em>Horace</em> ou <em>Cinna</em>, qui ont établi les fondements du théâtre classique. Avec <em>Le Menteur</em> (1644), adapté de <em>La Verdad sospechosa</em> de l'Espagnol Alarcón, il revient à la comédie et crée un type nouveau : le menteur brillant, figure baroque qui transforme le langage en art de la séduction et de l'invention. L'œuvre se situe à la charnière du baroque – avec ses thèmes de l'illusion, du mouvement et du paraître – et du classicisme, par sa structure et son époque de composition.</p>
+      </div>
+      <div class="author-meta-grid">
+        <div class="meta-item">
+          <label>Mouvement littéraire</label>
+          <p>Charnière Baroque / Classicisme</p>
+        </div>
+        <div class="meta-item">
+          <label>Registre principal</label>
+          <p>Comique, héroïcomique, galant</p>
+        </div>
+        <div class="meta-item full">
+          <label>Mots-clés</label>
+          <div class="mots-cles">
+            <span class="mot-cle">Illusion : Le monde comme un théâtre</span>
+            <span class="mot-cle">Paraître : Costume et rang social</span>
+            <span class="mot-cle">Parole créatrice : Le mensonge qui invente une réalité</span>
+            <span class="mot-cle">Métamorphose : de l'étudiant au cavalier</span>
+          </div>
+        </div>
+        <div class="meta-item full">
+          <label>Enjeu de l'œuvre</label>
+          <p>Dorante, héros narcissique, utilise la parole créatrice pour réinventer son identité et transformer la réalité en un spectacle dont il est le metteur en scène.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="texts-list-title">Textes au programme</div>
+
+    <a class="text-card" href="#" onclick="showText('corneille', 't1'); return false;">
+      <div class="text-card-num corneille">1</div>
+      <div class="text-card-info">
+        <div class="text-card-ref">Texte 1 · Le Menteur</div>
+        <div class="text-card-title">Acte I, scène 1 (v. 1-21)</div>
+        <div class="text-card-prob">En quoi cette scène d'exposition aiguise-t-elle aussi l'intérêt du spectateur ?</div>
+      </div>
+      <div class="text-card-arrow">→</div>
+    </a>
+    <a class="text-card" href="#" onclick="showText('corneille', 't2'); return false;">
+      <div class="text-card-num corneille">2</div>
+      <div class="text-card-info">
+        <div class="text-card-ref">Texte 2 · Le Menteur</div>
+        <div class="text-card-title">Acte III, scène 5 (v. 963-994)</div>
+        <div class="text-card-prob">En quoi le passage est-il un morceau de bravoure où le comique émerge d'une énonciation complexe ?</div>
+      </div>
+      <div class="text-card-arrow">→</div>
+    </a>
+    <a class="text-card" href="#" onclick="showText('corneille', 't3'); return false;">
+      <div class="text-card-num corneille">3</div>
+      <div class="text-card-info">
+        <div class="text-card-ref">Texte 3 · Le Menteur</div>
+        <div class="text-card-title">Acte V, scène 6 (v. 1713-1731)</div>
+        <div class="text-card-prob">Comment cette scène met-elle en évidence l'art du mensonge de Dorante ?</div>
+      </div>
+      <div class="text-card-arrow">→</div>
+    </a>
+  </div>
+</div>
+
+<!-- ======================================================
+     PAGE : AUTEUR – FONTENELLE
+     ====================================================== -->
+<div id="page-author-fontenelle" class="page">
+  <div class="back-bar">
+    <button class="back-btn" onclick="showPage('page-home')">← Accueil</button>
+    <div class="back-bar-title">Fontenelle</div>
+    <div class="back-bar-sub">Entretiens sur la pluralité des mondes · 3 textes</div>
+  </div>
+  <div class="container">
+    <div class="author-hero fontenelle">
+      <div class="author-hero-label">Œuvre n°2</div>
+      <div class="author-hero-name">Fontenelle</div>
+      <div class="author-hero-work">Entretiens sur la pluralité des mondes (1686) — Dialogue philosophique de vulgarisation astronomique</div>
+      <div class="author-intro-card">
+        <p>Bernard Le Bouyer de Fontenelle (1657-1757) est une figure carrefour des Lumières naissantes : académicien, neveu de Corneille, il fait le pont entre le XVIIe siècle classique et le XVIIIe siècle des Lumières. Son œuvre majeure, les <em>Entretiens sur la pluralité des mondes</em> (1686), est un dialogue innovant qui vulgarise la révolution copernicienne pour un public mondain, notamment les femmes. Fontenelle y met en scène un philosophe et une marquise qui dialoguent, nuit après nuit, sur l'astronomie. Son style alliant rigueur scientifique, humour galant et analogies amoureuses constitue une révolution dans la manière de transmettre le savoir.</p>
+      </div>
+      <div class="author-meta-grid">
+        <div class="meta-item">
+          <label>Mouvement littéraire</label>
+          <p>Classicisme (clarté) / Esprit Libertin (curiosité intellectuelle)</p>
+        </div>
+        <div class="meta-item">
+          <label>Registre principal</label>
+          <p>Didactique, galant, comique</p>
+        </div>
+        <div class="meta-item full">
+          <label>Mots-clés</label>
+          <div class="mots-cles">
+            <span class="mot-cle">Vulgarisation scientifique</span>
+            <span class="mot-cle">Dialogue galant</span>
+            <span class="mot-cle">Héliocentrisme (Copernic)</span>
+            <span class="mot-cle">Analogie amoureuse</span>
+            <span class="mot-cle">Libertinage d'idées</span>
+          </div>
+        </div>
+        <div class="meta-item full">
+          <label>Enjeu de l'œuvre</label>
+          <p>Utiliser le dialogue galant et l'analogie amoureuse pour instruire le lecteur de manière divertissante, sans l'ennuyer. Fontenelle incarne l'idéal de l'honnête homme éclairé qui rend la science accessible à tous.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="texts-list-title">Textes au programme</div>
+
+    <a class="text-card" href="#" onclick="showText('fontenelle', 't4'); return false;">
+      <div class="text-card-num fontenelle">4</div>
+      <div class="text-card-info">
+        <div class="text-card-ref">Texte 4 · Entretiens sur la pluralité des mondes</div>
+        <div class="text-card-title">Préface (extrait)</div>
+        <div class="text-card-prob">Comment Fontenelle utilise-t-il les codes de la fiction pour séduire son lecteur ?</div>
+      </div>
+      <div class="text-card-arrow">→</div>
+    </a>
+    <a class="text-card" href="#" onclick="showText('fontenelle', 't5'); return false;">
+      <div class="text-card-num fontenelle">5</div>
+      <div class="text-card-info">
+        <div class="text-card-ref">Texte 5 · Entretiens sur la pluralité des mondes</div>
+        <div class="text-card-title">« Enfin Copernic vint » — Premier Soir</div>
+        <div class="text-card-prob">En quoi ce texte propose-t-il une cosmogonie à la fois épique et comique ?</div>
+      </div>
+      <div class="text-card-arrow">→</div>
+    </a>
+    <a class="text-card" href="#" onclick="showText('fontenelle', 't6'); return false;">
+      <div class="text-card-num fontenelle">6</div>
+      <div class="text-card-info">
+        <div class="text-card-ref">Texte 6 · Entretiens sur la pluralité des mondes</div>
+        <div class="text-card-title">« Amour et astronomie » — Cinquième Soir</div>
+        <div class="text-card-prob">En quoi la science est-elle comme l'amour ?</div>
+      </div>
+      <div class="text-card-arrow">→</div>
+    </a>
+  </div>
+</div>
+
+<!-- ======================================================
+     PAGE : AUTEUR – RIMBAUD
+     ====================================================== -->
+<div id="page-author-rimbaud" class="page">
+  <div class="back-bar">
+    <button class="back-btn" onclick="showPage('page-home')">← Accueil</button>
+    <div class="back-bar-title">Arthur Rimbaud</div>
+    <div class="back-bar-sub">Cahiers de Douai · 3 textes</div>
+  </div>
+  <div class="container">
+    <div class="author-hero rimbaud">
+      <div class="author-hero-label">Œuvre n°3</div>
+      <div class="author-hero-name">Arthur Rimbaud</div>
+      <div class="author-hero-work">Cahiers de Douai (1870) — Recueil de poèmes de jeunesse</div>
+      <div class="author-intro-card">
+        <p>Arthur Rimbaud (1854-1891) est le poète-météore de la littérature française : à seize ans, il compose les poèmes des <em>Cahiers de Douai</em> (aussi appelés « Recueil Demeny »), qui constitueront un tournant radical dans l'histoire de la poésie. Enfant prodige de Charleville, élève brillant qui fugue à Paris puis en Belgique, Rimbaud exprime dans ces poèmes une révolte sociale et esthétique sans précédent contre le Second Empire, la guerre, l'Église et les conventions romantiques. Il invente une poésie de la sensation brute, du réalisme cru et de la subversion formelle, annonçant le symbolisme et toute la poésie moderne.</p>
+      </div>
+      <div class="author-meta-grid">
+        <div class="meta-item">
+          <label>Mouvement littéraire</label>
+          <p>Parnasse (rupture) / Symbolisme naissant / Réalisme social</p>
+        </div>
+        <div class="meta-item">
+          <label>Registre principal</label>
+          <p>Lyrique, pathétique, satirique, engagé</p>
+        </div>
+        <div class="meta-item full">
+          <label>Mots-clés</label>
+          <div class="mots-cles">
+            <span class="mot-cle">Révolte sociale et politique</span>
+            <span class="mot-cle">Subversion formelle (détournement du sonnet)</span>
+            <span class="mot-cle">Lexique trivial et réaliste</span>
+            <span class="mot-cle">Pathétique de la misère</span>
+            <span class="mot-cle">Anticlérical et antimilitariste</span>
+          </div>
+        </div>
+        <div class="meta-item full">
+          <label>Enjeu de l'œuvre</label>
+          <p>Rimbaud, à travers ces poèmes de jeunesse, crée une esthétique nouvelle : il transgresse les codes de la poésie traditionnelle pour y glisser la réalité brute du monde industriel et de la souffrance populaire, faisant du banal une matière poétique noble.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="texts-list-title">Textes au programme</div>
+
+    <a class="text-card" href="#" onclick="showText('rimbaud', 't7'); return false;">
+      <div class="text-card-num rimbaud">7</div>
+      <div class="text-card-info">
+        <div class="text-card-ref">Texte 7 · Cahiers de Douai</div>
+        <div class="text-card-title">« Les Effarés »</div>
+        <div class="text-card-prob">En quoi ce poème est-il un tableau pathétique de la misère enfantine qui fait entendre une dénonciation sociale ?</div>
+      </div>
+      <div class="text-card-arrow">→</div>
+    </a>
+    <a class="text-card" href="#" onclick="showText('rimbaud', 't8'); return false;">
+      <div class="text-card-num rimbaud">8</div>
+      <div class="text-card-info">
+        <div class="text-card-ref">Texte 8 · Cahiers de Douai</div>
+        <div class="text-card-title">« Le Mal »</div>
+        <div class="text-card-prob">En quoi ce texte est-il un sonnet politique antimilitariste et anticlérical ?</div>
+      </div>
+      <div class="text-card-arrow">→</div>
+    </a>
+    <a class="text-card" href="#" onclick="showText('rimbaud', 't9'); return false;">
+      <div class="text-card-num rimbaud">9</div>
+      <div class="text-card-info">
+        <div class="text-card-ref">Texte 9 · Cahiers de Douai</div>
+        <div class="text-card-title">« Au Cabaret-vert, cinq heures du soir »</div>
+        <div class="text-card-prob">En quoi a-t-on affaire à un sonnet réaliste qui dresse un tableau ordinaire ?</div>
+      </div>
+      <div class="text-card-arrow">→</div>
+    </a>
+  </div>
+</div>
+
+<!-- ======================================================
+     PAGE : AUTEUR – PRÉVOST
+     ====================================================== -->
+<div id="page-author-prevost" class="page">
+  <div class="back-bar">
+    <button class="back-btn" onclick="showPage('page-home')">← Accueil</button>
+    <div class="back-bar-title">Abbé Prévost</div>
+    <div class="back-bar-sub">Manon Lescaut · 3 textes</div>
+  </div>
+  <div class="container">
+    <div class="author-hero prevost">
+      <div class="author-hero-label">Œuvre n°4</div>
+      <div class="author-hero-name">Abbé Prévost</div>
+      <div class="author-hero-work">Manon Lescaut (1731) — Roman-mémoires</div>
+      <div class="author-intro-card">
+        <p>L'Abbé Prévost (1697-1763), de son nom complet Antoine François Prévost d'Exiles, est un romancier et journaliste des Lumières à la vie tumultueuse : moine bénédictin, militaire, exilé en Angleterre, il connaît une existence aussi agitée que ses personnages. <em>Manon Lescaut</em> (1731), publié comme septième tome des <em>Mémoires d'un homme de qualité</em>, est son chef-d'œuvre et l'un des romans les plus lus du XVIIIe siècle. Il y raconte, à travers la voix du chevalier des Grieux, une passion destructrice et sublime pour la mystérieuse Manon. Précurseur du romantisme par ses thèmes de la fatalité amoureuse, de la transgression sociale et du conflit entre passion et raison, Prévost invente un registre nouveau : l'élégie romanesque.</p>
+      </div>
+      <div class="author-meta-grid">
+        <div class="meta-item">
+          <label>Mouvement littéraire</label>
+          <p>Préclassicisme sentimental / Précurseur du romantisme</p>
+        </div>
+        <div class="meta-item">
+          <label>Registre principal</label>
+          <p>Élégiaque, pathétique, tragique</p>
+        </div>
+        <div class="meta-item full">
+          <label>Mots-clés</label>
+          <div class="mots-cles">
+            <span class="mot-cle">Coup de foudre et fatalité</span>
+            <span class="mot-cle">Aliénation amoureuse</span>
+            <span class="mot-cle">Double énonciation (Des Grieux narrateur/acteur)</span>
+            <span class="mot-cle">Registre élégiaque et pathétique</span>
+            <span class="mot-cle">Manon : personnage ambivalent (légèreté / sacrifice)</span>
+          </div>
+        </div>
+        <div class="meta-item full">
+          <label>Enjeu de l'œuvre</label>
+          <p>Des Grieux, narrateur intradiégétique, raconte rétrospectivement comment sa passion pour Manon Lescaut a causé sa perte, oscillant entre aveu de faiblesse et quête de justification morale.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="texts-list-title">Textes au programme</div>
+
+    <a class="text-card" href="#" onclick="showText('prevost', 't10'); return false;">
+      <div class="text-card-num prevost">10</div>
+      <div class="text-card-info">
+        <div class="text-card-ref">Texte 10 · Manon Lescaut</div>
+        <div class="text-card-title">« Rencontre » — La première rencontre avec Manon</div>
+        <div class="text-card-prob">En quoi le récit fonctionne-t-il comme une situation initiale avec un double message (coup de foudre et fatalité tragique) ?</div>
+      </div>
+      <div class="text-card-arrow">→</div>
+    </a>
+    <a class="text-card" href="#" onclick="showText('prevost', 't11'); return false;">
+      <div class="text-card-num prevost">11</div>
+      <div class="text-card-info">
+        <div class="text-card-ref">Texte 11 · Manon Lescaut</div>
+        <div class="text-card-title">« Visite de M. de B... » — La visite au parloir</div>
+        <div class="text-card-prob">En quoi cette scène met-elle en scène la duplicité et la faiblesse des personnages face au désir ?</div>
+      </div>
+      <div class="text-card-arrow">→</div>
+    </a>
+    <a class="text-card" href="#" onclick="showText('prevost', 't12'); return false;">
+      <div class="text-card-num prevost">12</div>
+      <div class="text-card-info">
+        <div class="text-card-ref">Texte 12 · Manon Lescaut</div>
+        <div class="text-card-title">« Mort de Manon » — La mort dans le désert</div>
+        <div class="text-card-prob">En quoi la mort de Manon constitue-t-elle une mort sublime et élégiaque ?</div>
+      </div>
+      <div class="text-card-arrow">→</div>
+    </a>
+  </div>
+</div>
+
+<!-- ======================================================
+     PAGE : TEXTE — Templates réutilisables par JS
+     ====================================================== -->
+<div id="page-text" class="page">
+  <div class="back-bar" id="text-back-bar">
+    <button class="back-btn" id="text-back-btn">← Auteur</button>
+    <div class="back-bar-title" id="text-bar-title">Texte</div>
+    <div class="back-bar-sub" id="text-bar-sub"></div>
+  </div>
+  <div class="container" id="text-content">
+    <!-- Injecté par JS -->
+  </div>
+</div>
+
+<!-- ======================================================
+     PAGE : TOUT LE LIVRET
+     ====================================================== -->
+<div id="page-all" class="page">
+  <div class="back-bar">
+    <button class="back-btn" onclick="showPage('page-home')">← Accueil</button>
+    <div class="back-bar-title">Livret complet</div>
+    <div class="back-bar-sub">12 textes · 4 auteurs</div>
+  </div>
+  <div class="container">
+    <div class="legend-box">
+      <div class="legend-title">Légende des couleurs de surlignage</div>
+      <div class="legend-items">
+        <div class="legend-item"><div class="legend-swatch m1p1"></div> Mvt 1 – P.1</div>
+        <div class="legend-item"><div class="legend-swatch m1p2"></div> Mvt 1 – P.2</div>
+        <div class="legend-item"><div class="legend-swatch m1p3"></div> Mvt 1 – P.3</div>
+        <div class="legend-item"><div class="legend-swatch m1p4"></div> Mvt 1 – P.4</div>
+        <div class="legend-item"><div class="legend-swatch m1p5"></div> Mvt 1 – P.5</div>
+        <div class="legend-item"><div class="legend-swatch m2p1"></div> Mvt 2 – P.1</div>
+        <div class="legend-item"><div class="legend-swatch m2p2"></div> Mvt 2 – P.2</div>
+        <div class="legend-item"><div class="legend-swatch m2p3"></div> Mvt 2 – P.3</div>
+        <div class="legend-item"><div class="legend-swatch m2p4"></div> Mvt 2 – P.4</div>
+        <div class="legend-item"><div class="legend-swatch m2p5"></div> Mvt 2 – P.5</div>
+        <div class="legend-item"><div class="legend-swatch m3p1"></div> Mvt 3 – P.1</div>
+        <div class="legend-item"><div class="legend-swatch m3p2"></div> Mvt 3 – P.2</div>
+        <div class="legend-item"><div class="legend-swatch m3p3"></div> Mvt 3 – P.3</div>
+        <div class="legend-item"><div class="legend-swatch m3p4"></div> Mvt 3 – P.4</div>
+        <div class="legend-item"><div class="legend-swatch m3p5"></div> Mvt 3 – P.5</div>
+        <div class="legend-item"><div class="legend-swatch m4p1"></div> Mvt 4 – P.1</div>
+        <div class="legend-item"><div class="legend-swatch m4p2"></div> Mvt 4 – P.2</div>
+        <div class="legend-item"><div class="legend-swatch m4p3"></div> Mvt 4 – P.3</div>
+        <div class="legend-item"><div class="legend-swatch m4p4"></div> Mvt 4 – P.4</div>
+        <div class="legend-item"><div class="legend-swatch m5p1"></div> Mvt 5 – P.1</div>
+        <div class="legend-item"><div class="legend-swatch m5p2"></div> Mvt 5 – P.2</div>
+        <div class="legend-item"><div class="legend-swatch m5p3"></div> Mvt 5 – P.3</div>
+        <div class="legend-item"><div class="legend-swatch m5p4"></div> Mvt 5 – P.4</div>
+      </div>
+    </div>
+    <div id="all-content"><!-- Injecté par JS --></div>
+  </div>
+</div>
+
+<script>
+// ======================================================
+//  DONNÉES : Tous les textes
+// ======================================================
+const AUTHORS = {
+  corneille: {
+    name: 'Pierre Corneille',
+    work: 'Le Menteur',
+    heroClass: 'corneille',
+    intro: `Pierre Corneille (1606-1684) est l'un des piliers du classicisme français. Dramaturge normand, il est surtout célèbre pour ses grandes tragédies comme <em>Le Cid</em>, <em>Horace</em> ou <em>Cinna</em>. Avec <em>Le Menteur</em> (1644), il revient à la comédie et crée un type nouveau : le menteur brillant, figure baroque qui transforme le langage en art de la séduction. L'œuvre se situe à la charnière du baroque – thèmes de l'illusion, du mouvement et du paraître – et du classicisme.`
+  },
+  fontenelle: {
+    name: 'Fontenelle',
+    work: 'Entretiens sur la pluralité des mondes',
+    heroClass: 'fontenelle',
+    intro: `Bernard Le Bouyer de Fontenelle (1657-1757) est une figure carrefour des Lumières naissantes : académicien, neveu de Corneille, il fait le pont entre le XVIIe siècle classique et le XVIIIe siècle des Lumières. Dans ses <em>Entretiens sur la pluralité des mondes</em> (1686), il vulgarise la révolution copernicienne pour un public mondain, notamment les femmes, en mêlant rigueur scientifique, humour galant et analogies amoureuses.`
+  },
+  rimbaud: {
+    name: 'Arthur Rimbaud',
+    work: 'Cahiers de Douai',
+    heroClass: 'rimbaud',
+    intro: `Arthur Rimbaud (1854-1891) est le poète-météore de la littérature française : à seize ans, il compose les poèmes des <em>Cahiers de Douai</em> (1870), qui constitueront un tournant radical dans l'histoire de la poésie. Enfant prodige de Charleville, il exprime dans ces poèmes une révolte sociale et esthétique sans précédent contre le Second Empire, la guerre, l'Église et les conventions romantiques.`
+  },
+  prevost: {
+    name: 'Abbé Prévost',
+    work: 'Manon Lescaut',
+    heroClass: 'prevost',
+    intro: `L'Abbé Prévost (1697-1763) est un romancier des Lumières à la vie tumultueuse. Dans <em>Manon Lescaut</em> (1731), il raconte, à travers la voix du chevalier des Grieux, une passion destructrice et sublime pour la mystérieuse Manon. Précurseur du romantisme par ses thèmes de la fatalité amoureuse et du conflit entre passion et raison, il invente un registre nouveau : l'élégie romanesque.`
+  }
+};
+
+const TEXTS = {
+  // ============ CORNEILLE ============
+  't1': {
+    author: 'corneille',
+    ref: 'Texte 1 · Le Menteur',
+    title: 'Acte I, scène 1 (v. 1-21)',
+    introText: `Cette scène d'exposition nous présente Dorante, qui vient de quitter ses études de droit pour entamer sa métamorphose en cavalier parisien. Ce retour de Corneille à la comédie s'ouvre sur un moment d'effervescence et d'affirmation de soi. Le lieu de l'action — les jardins des Tuileries — est immédiatement posé comme un théâtre du paraître et de la galanterie.`,
+    introKw: [
+      { label: 'Contexte', text: 'Retour de Corneille à la comédie (1644).' },
+      { label: 'Enjeu', text: 'Métamorphose de Dorante : d\'étudiant en cavalier parisien.' }
+    ],
+    problematique: 'En quoi cette scène d\'exposition, qui apporte des éléments d\'information au spectateur, aiguise-t-elle aussi son intérêt ?',
+    texteIntegral: `<b>Dorante.</b>
+A la fin j'ai <span class="m1p1">quitté la robe pour l'épée</span> :
+<span class="m1p2">l'attente où j'ai vécu n'a point été trompée</span> ;
+<span class="m1p3">mon père a consenti que je suive mon choix,</span>
+et j'ai fait <span class="m1p4">banqueroute à ce fatras de lois</span>.
+
+Mais puisque nous voici <span class="m2p1">dedans les Tuileries</span>, 5
+<span class="m2p2">le pays du beau monde et des galanteries</span>,
+<span class="m2p3">dis-moi, me trouves-tu bien fait en cavalier ?</span>
+<span class="m2p4">Ne vois-tu rien en moi qui sente l'écolier ?</span>
+Comme il est malaisé qu'<span class="m2p5">aux royaumes du code
+on apprenne à se faire un visage à la mode</span>, 10
+<span class="m2p6">j'ai lieu d'appréhender...</span>
+
+<b>Cliton.</b>
+ Ne craignez rien pour vous :
+<span class="m3p1">vous ferez en une heure ici mille jaloux.</span>
+<span class="m3p2">Ce visage et ce port n'ont point l'air de l'école</span>,
+et <span class="m3p3">jamais comme vous on ne peignit Bartole</span> :
+<span class="m3p4">je prévois du malheur pour beaucoup de maris.</span> 15
+<span class="m3p5">Mais que vous semble encor maintenant de Paris ?</span>
+
+<b>Dorante.</b>
+<span class="m4p1">J'en trouve l'air bien doux, et cette loi bien rude</span>
+qui m'en avoit <span class="m4p2">banni sous prétexte d'étude</span>.
+<span class="m4p3">Toi qui sais les moyens de s'y bien divertir,
+ayant eu le bonheur de n'en jamais sortir,</span> 20
+<span class="m4p4">dis-moi comme en ce lieu l'on gouverne les dames.</span>`,
+    mouvements: [
+      {
+        classe: 'mvt1',
+        titre: 'Mouvement 1',
+        soustitre: '— La rupture avec le passé (v. 1-4)',
+        procedes: [
+          { num: 1, cite: '« quitté la robe pour l\'épée »', ref: '(v. 1)', citeClass: 'm1p1', analyse: 'La <span class="procede-type">locution temporelle</span> (« À la fin ») souligne le soulagement. La <span class="procede-type">double métonymie</span> (« la robe » pour les études/la loi, « l\'épée » pour la noblesse) symbolise immédiatement son changement radical de classe sociale.' },
+          { num: 2, cite: '« l\'attente où j\'ai vécu n\'a point été trompée »', ref: '(v. 2)', citeClass: 'm1p2', analyse: 'L\'utilisation de la <span class="procede-type">litote</span> insiste sur la réussite immédiate de sa transition sociale, tandis que le lexique de l\'illusion (« trompée ») amorce le thème du mensonge.' },
+          { num: 3, cite: '« mon père a consenti que je suive mon choix »', ref: '(v. 3)', citeClass: 'm1p3', analyse: 'Le <span class="procede-type">champ lexical du consentement</span> montre que l\'autorité paternelle valide cette émancipation, la rendant légale.' },
+          { num: 4, cite: '« banqueroute à ce fatras de lois »', ref: '(v. 4)', citeClass: 'm1p4', analyse: 'La <span class="procede-type">métaphore financière</span> (« banqueroute ») et le <span class="procede-type">terme péjoratif</span> (« fatras ») rejettent son passé d\'étudiant avec un profond mépris.' }
+        ]
+      },
+      {
+        classe: 'mvt2',
+        titre: 'Mouvement 2',
+        soustitre: '— Le théâtre des Tuileries (v. 5-11)',
+        procedes: [
+          { num: 1, cite: '« dedans les Tuileries »', ref: '(v. 5)', citeClass: 'm2p1', analyse: 'La <span class="procede-type">didascalie interne</span> ancre l\'action dans un lieu mondain de parade.' },
+          { num: 2, cite: '« le pays du beau monde et des galanteries »', ref: '(v. 6)', citeClass: 'm2p2', analyse: 'La <span class="procede-type">périphrase élogieuse</span> définit le nouveau système de valeurs de Dorante : l\'apparence et la séduction.' },
+          { num: 3, cite: '« dis-moi, me trouves-tu bien fait en cavalier ? »', ref: '(v. 7)', citeClass: 'm2p3', analyse: 'L\'<span class="procede-type">interrogation directe</span> trahit le narcissisme de Dorante et son besoin de validation.' },
+          { num: 4, cite: '« Ne vois-tu rien en moi qui sente l\'écolier ? »', ref: '(v. 8)', citeClass: 'm2p4', analyse: 'La <span class="procede-type">phrase interro-négative</span> et l\'<span class="procede-type">antithèse</span> (cavalier / écolier) révèlent son insécurité face à son ancienne identité.' },
+          { num: 5, cite: '« aux royaumes du code / on apprenne à se faire un visage à la mode »', ref: '(v. 9-10)', citeClass: 'm2p5', analyse: 'L\'<span class="procede-type">allégorie</span> austère de l\'université s\'oppose à la <span class="procede-type">métaphore de la fabrication</span> du visage, dévoilant une identité conçue comme un simple masque.' },
+          { num: 6, cite: '« j\'ai lieu d\'appréhender... »', ref: '(v. 11)', citeClass: 'm2p6', analyse: 'L\'<span class="procede-type">aposiopèse</span> (interruption) par le valet donne un rythme vif à l\'échange comique.' }
+        ]
+      },
+      {
+        classe: 'mvt3',
+        titre: 'Mouvement 3',
+        soustitre: '— La flatterie de Cliton (v. 12-16)',
+        procedes: [
+          { num: 1, cite: '« vous ferez en une heure ici mille jaloux »', ref: '(v. 12)', citeClass: 'm3p1', analyse: 'L\'<span class="procede-type">hyperbole chiffrée</span> de Cliton flatte l\'ego de son maître.' },
+          { num: 2, cite: '« Ce visage et ce port n\'ont point l\'air de l\'école »', ref: '(v. 13)', citeClass: 'm3p2', analyse: 'Le <span class="procede-type">parallélisme</span> souligne la transformation purement physique.' },
+          { num: 3, cite: '« jamais comme vous on ne peignit Bartole »', ref: '(v. 14)', citeClass: 'm3p3', analyse: 'La <span class="procede-type">référence culturelle comique</span> (Bartole, vieux juriste) crée un contraste par l\'absurde avec la beauté de Dorante.' },
+          { num: 4, cite: '« je prévois du malheur pour beaucoup de maris »', ref: '(v. 15)', citeClass: 'm3p4', analyse: 'Cette <span class="procede-type">prolepse</span> dramatique annonce les intrigues amoureuses à venir.' },
+          { num: 5, cite: '« Mais que vous semble encor maintenant de Paris ? »', ref: '(v. 16)', citeClass: 'm3p5', analyse: 'La <span class="procede-type">question de relance</span> permet à Dorante d\'exposer sa philosophie.' }
+        ]
+      },
+      {
+        classe: 'mvt4',
+        titre: 'Mouvement 4',
+        soustitre: '— Le projet galant (v. 17-21)',
+        procedes: [
+          { num: 1, cite: '« J\'en trouve l\'air bien doux, et cette loi bien rude »', ref: '(v. 17)', citeClass: 'm4p1', analyse: 'Le <span class="procede-type">parallélisme antithétique</span> justifie son choix moral du plaisir contre la contrainte.' },
+          { num: 2, cite: '« banni sous prétexte d\'étude »', ref: '(v. 18)', citeClass: 'm4p2', analyse: 'Le lexique dramatique de l\'<span class="procede-type">exil</span> (« banni ») et le nom ironique <span class="procede-type">« prétexte »</span> dévaluent totalement l\'éducation.' },
+          { num: 3, cite: '« divertir / ayant eu le bonheur de n\'en jamais sortir »', ref: '(v. 19-20)', citeClass: 'm4p3', analyse: 'Le <span class="procede-type">champ lexical de la jouissance</span> montre la complicité hédoniste entre le maître et le valet.' },
+          { num: 4, cite: '« dis-moi comme en ce lieu l\'on gouverne les dames »', ref: '(v. 21)', citeClass: 'm4p4', analyse: 'La <span class="procede-type">métaphore militaire et politique</span> (« gouverne ») résume l\'amour à une stratégie de conquête.' }
+        ]
+      }
+    ],
+    conclusionFull: 'Le bilan informatif est complet : le spectateur connaît le passé et les buts de Dorante. Surtout, l\'intérêt dramatique est stimulé par la personnalité narcissique du héros, promettant une conduite audacieuse. Enfin, cette scène introduit magnifiquement la thématique du « théâtre dans le théâtre » par l\'obsession du costume et du masque.',
+    conclusionItems: [
+      { label: 'Bilan informatif', text: 'Passé et buts de Dorante pleinement révélés au spectateur.' },
+      { label: 'Intérêt dramatique', text: 'La personnalité narcissique promet une conduite audacieuse.' },
+      { label: 'Thématique', text: 'Introduction du « théâtre dans le théâtre » par l\'obsession du costume et du masque.' }
+    ],
+    extra: {
+      motsCles: ['Narcissisme', 'Métonymie (robe/épée)', 'Didascalie interne', 'Comique de caractère', 'Aposiopèse'],
+      contextePlus: 'Cette scène d\'ouverture s\'inscrit dans la tradition de la scène d\'exposition classique qui doit informer le spectateur tout en créant de l\'attente. Corneille reprend ici un procédé baroque : le héros se regarde dans le miroir de l\'autre.'
+    }
+  },
+  't2': {
+    author: 'corneille',
+    ref: 'Texte 2 · Le Menteur',
+    title: 'Acte III, scène 5 (v. 963-994)',
+    introText: `L'intrigue est à son comble. Dorante s'est enlisé dans de faux récits de guerre et un faux mariage. Clarice, qu'il cherche à séduire, a percé à jour ses tromperies et décide de le confronter. L'enjeu est le dégonflement imminent de sa bulle de mensonges. La scène se joue dans un face-à-face théâtral où chaque réplique est un duel rhétorique.`,
+    introKw: [
+      { label: 'Contexte', text: 'Confrontation : Clarice a percé à jour les tromperies de Dorante.' },
+      { label: 'Enjeu', text: 'Dégonflement imminent de la bulle de mensonges du héros.' }
+    ],
+    problematique: 'En quoi le passage est-il un morceau de bravoure où le comique émerge d\'une énonciation complexe ?',
+    texteIntegral: `<b>Dorante.</b>
+ <span class="m1p1">Impossible ! Ah ! Pour vous</span>
+<span class="m1p2">je pourrai tout, madame, en tous lieux, contre tous.</span>
+<b>Clarice.</b>
+Jusqu'à vous marier, quand je sais que vous l'êtes ? 965
+<b>Dorante.</b>
+<span class="m1p3">Moi, marié !</span> Ce sont <span class="m1p4">pièces qu'on vous a faites</span> ;
+quiconque vous l'a dit s'est voulu divertir.
+<b>Clarice.</b>
+<span class="m2p1">Est-il un plus grand fourbe ?</span>
+<b>Lucrèce.</b>
+ <span class="m2p2">Il ne sait que mentir.</span>
+<b>Dorante.</b>
+<span class="m2p3">Je ne le fus jamais</span> ; et si par cette voie
+<span class="m2p4">on pense...</span>
+<b>Clarice.</b>
+ <span class="m2p5">Et vous pensez encor que je vous croie ?</span> 970
+<b>Dorante.</b>
+<span class="m3p1">Que le foudre à vos yeux m'écrase, si je mens !</span>
+<b>Clarice.</b>
+<span class="m3p2">Un menteur est toujours prodigue de serments.</span>
+<b>Dorante.</b>
+Non, si vous avez eu pour moi quelque pensée
+qui sur ce faux rapport puisse être balancée,
+<span class="m3p3">cessez d'être en balance</span> et de vous défier 975
+de ce qu'il m'est aisé de vous justifier.
+<b>Clarice.</b>
+<span class="m3p4">On diroit qu'il dit vrai, tant son effronterie
+avec naïveté pousse une menterie.</span>
+<b>Dorante.</b>
+<span class="m3p5">Pour vous ôter de doute, agréez que demain
+en qualité d'époux je vous donne la main.</span> 980
+<b>Clarice.</b>
+Eh ! <span class="m4p1">Vous la donneriez en un jour à deux mille.</span>
+<b>Dorante.</b>
+<span class="m4p2">Certes, vous m'allez mettre en crédit par la ville,</span>
+<span class="m4p3">mais en crédit si grand, que j'en crains les jaloux.</span>
+<b>Clarice.</b>
+C'est tout ce que mérite un homme tel que vous,
+un homme qui se dit <span class="m4p4">un grand foudre de guerre</span>, 985
+<span class="m4p5">et n'en a vu qu'à coups d'écritoire ou de verre</span> ;
+qui vint hier de Poitiers, et conte, à son retour,
+que depuis une année il fait ici sa cour ;
+qui donne toute nuit festin, musique et danse,
+bien qu'il l'ait dans son lit passée en tout silence ; 990
+qui se dit marié, puis soudain s'en dédit :
+sa méthode est jolie à se mettre en crédit !
+Vous-même, apprenez-moi comme il faut qu'on le nomme.
+<b>Cliton.</b>
+Si vous vous en tirez, je vous tiens habile homme.`,
+    mouvements: [
+      {
+        classe: 'mvt1', titre: 'Mouvement 1', soustitre: '— L\'obstination spectaculaire (v. 963-967)',
+        procedes: [
+          { num: 1, cite: '« Impossible ! Ah ! Pour vous »', ref: '(v. 963)', citeClass: 'm1p1', analyse: 'La cascade d\'<span class="procede-type">exclamations</span> feint une surprise totale pour esquiver et gagner du temps.' },
+          { num: 2, cite: '« je pourrai tout, madame, en tous lieux, contre tous »', ref: '(v. 964)', citeClass: 'm1p2', analyse: 'L\'<span class="procede-type">hyperbole galante</span> et l\'<span class="procede-type">allitération en [t]</span> constituent une feinte héroïque pour détourner l\'accusation vers le sentimentalisme.' },
+          { num: 3, cite: '« Moi, marié ! »', ref: '(v. 966)', citeClass: 'm1p3', analyse: 'L\'<span class="procede-type">apostrophe à soi-même</span> renforce l\'aplomb du menteur.' },
+          { num: 4, cite: '« pièces qu\'on vous a faites »', ref: '(v. 966)', citeClass: 'm1p4', analyse: 'La <span class="procede-type">métaphore théâtrale</span> (« pièces ») accuse autrui de faire des mises en scène.' }
+        ]
+      },
+      {
+        classe: 'mvt2', titre: 'Mouvement 2', soustitre: '— Le menteur démasqué (v. 968-971)',
+        procedes: [
+          { num: 1, cite: '« Est-il un plus grand fourbe ? »', ref: '(v. 968)', citeClass: 'm2p1', analyse: 'La <span class="procede-type">question rhétorique</span> de Clarice encercle Dorante et réduit son identité à son vice.' },
+          { num: 2, cite: '« Il ne sait que mentir »', ref: '(v. 968)', citeClass: 'm2p2', analyse: 'La <span class="procede-type">négation restrictive</span> de Lucrèce réduit l\'identité entière de Dorante à son vice.' },
+          { num: 3, cite: '« Je ne le fus jamais »', ref: '(v. 969)', citeClass: 'm2p3', analyse: 'La <span class="procede-type">négation absolue</span> conjuguée au passé simple montre une audace suicidaire face à l\'évidence.' },
+          { num: 4, cite: '« on pense... »', ref: '(v. 970)', citeClass: 'm2p4', analyse: 'L\'<span class="procede-type">aposiopèse</span> témoigne de la perte de contrôle rhétorique du héros, qui bégaie.' },
+          { num: 5, cite: '« Et vous pensez encor que je vous croie ? »', ref: '(v. 970)', citeClass: 'm2p5', analyse: 'L\'<span class="procede-type">interrogation sarcastique</span> de Clarice détruit le masque galant.' }
+        ]
+      },
+      {
+        classe: 'mvt3', titre: 'Mouvement 3', soustitre: '— La surenchère des serments (v. 972-983)',
+        procedes: [
+          { num: 1, cite: '« Que le foudre à vos yeux m\'écrase, si je mens ! »', ref: '(v. 972)', citeClass: 'm3p1', analyse: 'L\'<span class="procede-type">invocation mythologique</span> relève du registre tragique, détourné ici pour un effet comique de disproportion.' },
+          { num: 2, cite: '« Un menteur est toujours prodigue de serments »', ref: '(v. 973)', citeClass: 'm3p2', analyse: 'La <span class="procede-type">maxime morale</span> de Clarice neutralise immédiatement le sortilège de Dorante.' },
+          { num: 3, cite: '« cessez d\'être en balance »', ref: '(v. 976)', citeClass: 'm3p3', analyse: 'La <span class="procede-type">métaphore de la pesée</span> traduit sa volonté pathétique de reprendre l\'ascendant psychologique.' },
+          { num: 4, cite: '« tant son effronterie / avec naïveté pousse une menterie »', ref: '(v. 978-979)', citeClass: 'm3p4', analyse: 'Cet <span class="procede-type">oxymore</span> (effronterie / naïveté) est l\'essence même du génie comique de Dorante.' },
+          { num: 5, cite: '« agréez que demain / en qualité d\'époux je vous donne la main »', ref: '(v. 980-981)', citeClass: 'm3p5', analyse: 'Le <span class="procede-type">lexique formel de l\'engagement</span> montre le menteur cherchant à écraser un vieux mensonge par un nouveau.' }
+        ]
+      },
+      {
+        classe: 'mvt4', titre: 'Mouvement 4', soustitre: '— Le gouffre entre le mythe et la réalité (v. 984-994)',
+        procedes: [
+          { num: 1, cite: '« Vous la donneriez en un jour à deux mille »', ref: '(v. 981)', citeClass: 'm4p1', analyse: 'L\'<span class="procede-type">hyperbole sarcastique</span> de Clarice scelle son échec.' },
+          { num: 2, cite: '« Certes, vous m\'allez mettre en crédit par la ville »', ref: '(v. 982)', citeClass: 'm4p2', analyse: 'L\'<span class="procede-type">autoglorification</span> illustre son déni de réalité.' },
+          { num: 3, cite: '« mais en crédit si grand, que j\'en crains les jaloux »', ref: '(v. 983)', citeClass: 'm4p3', analyse: 'L\'<span class="procede-type">anaphore</span> et la <span class="procede-type">reprise ironique</span> du vocabulaire épique ridiculisent Dorante.' },
+          { num: 4, cite: '« un grand foudre de guerre »', ref: '(v. 985)', citeClass: 'm4p4', analyse: 'La <span class="procede-type">reprise ironique du vocabulaire épique</span> par Clarice ridiculise les prétentions martiales de Dorante.' },
+          { num: 5, cite: '« et n\'en a vu qu\'à coups d\'écritoire ou de verre »', ref: '(v. 986)', citeClass: 'm4p5', analyse: 'L\'<span class="procede-type">antithèse triviale</span> rabaisse l\'héroïsme au rang d\'ivrognerie ou d\'études ennuyeuses.' }
+        ]
+      }
+    ],
+    conclusionFull: 'Le bilan de cette confrontation est fascinant : Dorante ne se repent jamais, s\'enfonçant dans une surenchère absurde. L\'intensité de la scène tient au comique de caractère, qui naît de cette effronterie vertigineuse mêlée à la naïveté de celui qui croit au pouvoir magique de sa propre parole.',
+    conclusionItems: [
+      { label: 'Bilan', text: 'Dorante ne se repent jamais, s\'enfonçant dans une surenchère absurde.' },
+      { label: 'Comique', text: 'Comique de caractère né de l\'effronterie vertigineuse mêlée à la naïveté du menteur.' }
+    ],
+    extra: {
+      motsCles: ['Oxymore (effronterie/naïveté)', 'Stichomythie', 'Apostrophe à soi-même', 'Maxime morale', 'Aposiopèse'],
+      contextePlus: 'Cette scène est considérée comme le « climax » comique de la pièce. Le comique de situation repose sur un retournement baroque : plus Dorante est démasqué, plus il s\'enfonce dans le mensonge. La prétention héroïque de Dorante est systématiquement désamorcée par la lucidité féroce de Clarice.'
+    }
+  },
+  't3': {
+    author: 'corneille',
+    ref: 'Texte 3 · Le Menteur',
+    title: 'Acte V, scène 6 (v. 1713-1731)',
+    introText: `Nous voici au dénouement. Tout au long de l'œuvre, Dorante a confondu Clarice et Lucrèce. Dans cette scène, les quiproquos d'identité s'achèvent. Dorante, mis devant le fait accompli, va tenter une ultime pirouette morale et rhétorique pour sauver la face. La scène est aussi un moment de lucidité cruelle : tous les personnages savent désormais la vérité.`,
+    introKw: [
+      { label: 'Contexte', text: 'Dénouement : les quiproquos d\'identité s\'achèvent.' },
+      { label: 'Enjeu', text: 'Dorante tente une ultime pirouette morale et rhétorique.' }
+    ],
+    problematique: 'Comment cette scène met-elle en évidence l\'art du mensonge de Dorante ?',
+    texteIntegral: `<b>Clarice.</b>
+<span class="m1p1">Mais enfin vous n'avez que mépris pour Clarice ?</span>
+<b>Dorante.</b>
+Mais enfin vous savez <span class="m1p2">le nœud de l'artifice</span>,
+et que pour être à vous je fais ce que je puis. 1715
+<b>Clarice.</b>
+<span class="m1p3">Je ne sais plus moi-même, à mon tour, où j'en suis.</span>
+<b>Lucrèce.</b>
+Écoute un mot.
+<b>Dorante.</b>
+ <span class="m1p4">Lucrèce ! Que dit-elle ?</span>
+<b>Cliton.</b>
+<span class="m2p1">Vous en tenez, monsieur : Lucrèce est la plus belle ;</span>
+mais laquelle des deux ? J'en ai le mieux jugé,
+et vous auriez perdu si vous aviez gagé. 1720
+<b>Dorante.</b>
+<span class="m2p2">Cette nuit à la voix j'ai cru la reconnoître.</span>
+<b>Cliton.</b>
+<span class="m2p3">Clarice sous son nom parloit à sa fenêtre ;</span>
+Sabine m'en a fait un secret entretien.
+<b>Dorante.</b>
+<span class="m2p4">Bonne bouche, j'en tiens ;</span> mais l'autre la vaut bien ;
+et comme dès tantôt je la trouvois bien faite, 1725
+mon cœur déjà penchoit où mon erreur le jette.
+<span class="m3p1">Ne me découvre point ; et dans ce nouveau feu</span>
+<span class="m3p2">tu me vas voir, Cliton, jouer un nouveau jeu.</span>
+<span class="m3p3">Sans changer de discours changeons de batterie.</span>
+<b>Lucrèce.</b>
+<span class="m3p4">Voyons le dernier point de son effronterie</span> ; 1730
+quand tu lui diras tout, il sera bien surpris.`,
+    mouvements: [
+      {
+        classe: 'mvt1', titre: 'Mouvement 1', soustitre: '— La révélation exaspérée (v. 1713-1717)',
+        procedes: [
+          { num: 1, cite: '« Mais enfin vous n\'avez que mépris pour Clarice ? »', ref: '(v. 1713)', citeClass: 'm1p1', analyse: 'La <span class="procede-type">négation restrictive</span> et l\'interrogation soulignent la fin des illusions de la jeune femme.' },
+          { num: 2, cite: '« le nœud de l\'artifice »', ref: '(v. 1714)', citeClass: 'm1p2', analyse: 'L\'anaphore de "Mais enfin" et la <span class="procede-type">métaphore dramatique</span> (« nœud ») explicitent la fin de la manipulation scénaristique.' },
+          { num: 3, cite: '« Je ne sais plus moi-même, à mon tour, où j\'en suis »', ref: '(v. 1716)', citeClass: 'm1p3', analyse: 'L\'<span class="procede-type">aveu de confusion</span> de Clarice montre l\'épuisement mental causé par le mensonge.' },
+          { num: 4, cite: '« Lucrèce ! Que dit-elle ? »', ref: '(v. 1717)', citeClass: 'm1p4', analyse: 'La <span class="procede-type">stichomythie</span> donne une impulsion nerveuse qui accélère le rythme vers l\'éclatement de la vérité.' }
+        ]
+      },
+      {
+        classe: 'mvt2', titre: 'Mouvement 2', soustitre: '— La lucidité brutale (v. 1718-1722)',
+        procedes: [
+          { num: 1, cite: '« Vous en tenez, monsieur : Lucrèce est la plus belle »', ref: '(v. 1718)', citeClass: 'm2p1', analyse: 'L\'<span class="procede-type">expression familière</span> du valet tranche avec le vernis aristocratique et ramène Dorante au réel.' },
+          { num: 2, cite: '« Cette nuit à la voix j\'ai cru la reconnoître »', ref: '(v. 1721)', citeClass: 'm2p2', analyse: 'La justification repose sur le lexique de la <span class="procede-type">sensorialité trompeuse</span> (la nuit, la voix).' },
+          { num: 3, cite: '« Clarice sous son nom parloit à sa fenêtre »', ref: '(v. 1722)', citeClass: 'm2p3', analyse: 'Cliton produit l\'<span class="procede-type">explication factuelle</span> qui résout objectivement le quiproquo du balcon.' },
+          { num: 4, cite: '« Bonne bouche, j\'en tiens »', ref: '(v. 1724)', citeClass: 'm2p4', analyse: 'L\'<span class="procede-type">évaluation marchande</span> cynique de Dorante prouve son inconstance absolue.' }
+        ]
+      },
+      {
+        classe: 'mvt3', titre: 'Mouvement 3', soustitre: '— Le rebond cynique (v. 1725-1731)',
+        procedes: [
+          { num: 1, cite: '« Ne me découvre point ; et dans ce nouveau feu »', ref: '(v. 1727)', citeClass: 'm3p1', analyse: 'La <span class="procede-type">personnification du cœur</span> et la <span class="procede-type">rationalisation a posteriori</span> transforment génialement sa stupidité en fatalité amoureuse.' },
+          { num: 2, cite: '« tu me vas voir, Cliton, jouer un nouveau jeu »', ref: '(v. 1728)', citeClass: 'm3p2', analyse: 'Le <span class="procede-type">polyptote</span> confirme que la vie sentimentale n\'est qu\'une scène de théâtre.' },
+          { num: 3, cite: '« Sans changer de discours changeons de batterie »', ref: '(v. 1729)', citeClass: 'm3p3', analyse: 'La <span class="procede-type">métaphore de l\'artillerie militaire</span> montre que le mensonge est une munition recyclable.' },
+          { num: 4, cite: '« Voyons le dernier point de son effronterie »', ref: '(v. 1730)', citeClass: 'm3p4', analyse: 'L\'<span class="procede-type">hyperbole spectaculaire</span> de Lucrèce transforme la fin de la pièce en exhibition.' }
+        ]
+      }
+    ],
+    conclusionFull: 'La scène illustre un « tous en scène » propre aux dénouements classiques. Si l\'intrigue est résolue, la morale ne l\'est pas : Dorante reste un menteur invétéré. Une défiance totale persistera à son égard, donnant à cette fin de comédie une saveur moderne et grinçante où l\'illusion l\'emporte sur la sincérité.',
+    conclusionItems: [
+      { label: 'Mise en scène', text: '« Tous en scène » propre aux dénouements classiques.' },
+      { label: 'Dénouement', text: 'L\'intrigue est résolue mais Dorante reste un menteur invétéré.' },
+      { label: 'Défiance', text: 'Une défiance totale persistera à son égard.' },
+      { label: 'Réflexion sur le genre', text: 'Fin grinçante et moderne : l\'illusion l\'emporte sur la sincérité.' }
+    ],
+    extra: {
+      motsCles: ['Polyptote', 'Stichomythie', 'Métaphore militaire', 'Rebond dramatique', 'Dénouement ambigu'],
+      contextePlus: 'Le dénouement de la pièce est intentionnellement ambigu. Contrairement aux dénouements classiques où la morale est rétablie, Dorante ne reçoit pas de véritable punition. Cette ambiguïté est l\'une des modernités du Menteur.'
+    }
+  },
+
+  // ============ FONTENELLE ============
+  't4': {
+    author: 'fontenelle',
+    ref: 'Texte 4 · Entretiens sur la pluralité des mondes',
+    title: 'Préface (extrait)',
+    introText: `Dans cette Préface, Fontenelle légitime son entreprise inédite : vulgariser l'astronomie copernicienne pour un public de non-spécialistes. Pour cela, il instaure le cadre d'un dialogue entre un philosophe et une aristocrate, la Marquise. La Préface est une prise de parole directe qui mêle modestie feinte, éloge de la Marquise et pacte de lecture ludique avec le destinataire.`,
+    introKw: [
+      { label: 'Contexte', text: 'Vulgarisation de l\'astronomie copernicienne (fin XVIIe).' },
+      { label: 'Enjeu', text: 'Légitimer le dialogue philosophe / Marquise comme vecteur du savoir.' }
+    ],
+    problematique: 'Comment Fontenelle utilise-t-il les codes de la fiction pour séduire son lecteur ?',
+    texteIntegral: `À MONSIEUR L…
+<span class="m1p1">Vous voulez, Monsieur, que je vous rende un compte exact</span> de la manière dont j'ai passé mon
+temps à la campagne, chez Madame la Marquise de G***. Savez-vous bien que ce compte exact
+sera <span class="m1p2">un livre ; et ce qu'il y a de pis, un livre de philosophie ?</span> Vous vous attendez à des fêtes, à
+des parties de jeu ou de chasse, <span class="m1p3">et vous aurez des planètes, des mondes, des tourbillons</span> ; il n'a
+presque été question que de ces choses-là. <span class="m1p4">Heureusement vous êtes philosophe</span>, et vous ne vous
+en moquerez pas tant qu'un autre.
+
+Peut-être même serez-vous bien aise que j'aie <span class="m2p1">attiré Madame la Marquise dans le parti de la philosophie.</span>
+Nous ne pouvions faire une acquisition plus considérable ; car je compte que <span class="m2p2">la beauté et la
+jeunesse sont toujours des choses d'un grand prix.</span> Ne croyez-vous pas que si la sagesse elle-même
+voulait se présenter aux hommes avec succès, <span class="m2p3">elle ne ferait point mal de paraître sous une figure
+qui approchât un peu de celle de la Marquise ?</span> Surtout si elle pouvait avoir dans sa conversation
+les mêmes agréments, <span class="m2p4">je suis persuadé que tout le monde courroit après la sagesse.</span>
+
+<span class="m3p1">Ne vous attendez pourtant pas à entendre des merveilles</span>, quand je vous ferai le récit des entretiens
+que j'ai eus avec cette dame ; il faudroit presque avoir autant d'esprit qu'elle, pour répéter ce
+qu'elle dit de la manière dont elle l'a dit. <span class="m3p2">Vous lui verrez seulement cette vivacité d'intelligence
+que vous lui connaissez.</span> Pour moi, je la tiens savante, à cause de <span class="m3p3">l'extrême facilité qu'elle aurait
+à le devenir.</span> Qu'est-ce qui lui manque ? D'avoir ouvert les yeux sur des livres ; cela n'est rien,
+et bien des gens l'ont fait toute leur vie, <span class="m3p4">à qui je refuserais, si j'osais, le nom de savants.</span>
+
+Au reste, Monsieur, vous m'aurez une obligation. Je sais bien qu'avant que d'entrer dans le détail
+des conversations que j'ai eues avec la Marquise, <span class="m4p1">je serois en droit de vous décrire le château</span>
+où elle était allée passer l'automne. <span class="m4p2">On a souvent décrit des châteaux pour de moindres occasions</span> ;
+mais je vous ferai grâce sur cela. Il suffit que vous sachiez que quand j'arrivai chez elle, je n'y
+trouvai point de compagnie, <span class="m4p3">et que j'en fus fort aise.</span> Les deux premiers jours n'eurent rien de
+remarquable ; ils se passèrent à <span class="m4p4">épuiser les nouvelles de Paris</span> d'où je venois, mais ensuite vinrent
+ces entretiens dont je veux vous faire part. <span class="m4p5">Je vous les diviserai par soirs</span>, parce qu'effectivement
+nous n'eûmes de ces entretiens que les soirs.`,
+    mouvements: [
+      {
+        classe: 'mvt1', titre: 'Mouvement 1', soustitre: '— Le pacte de lecture (l. 1-6)',
+        procedes: [
+          { num: 1, cite: '« Vous voulez, Monsieur, que je vous rende un compte exact »', ref: '(l. 1)', citeClass: 'm1p1', analyse: 'Le <span class="procede-type">registre épistolaire</span> ancre la fiction dans une vérité immédiate et intime.' },
+          { num: 2, cite: '« un livre ; et ce qu\'il y a de pis, un livre de philosophie »', ref: '(l. 3)', citeClass: 'm1p2', analyse: 'L\'<span class="procede-type">autodérision</span> désamorce les craintes du lecteur mondain face au jargon.' },
+          { num: 3, cite: '« et vous aurez des planètes, des mondes, des tourbillons »', ref: '(l. 4-5)', citeClass: 'm1p3', analyse: 'L\'<span class="procede-type">antithèse</span> et l\'<span class="procede-type">accumulation cosmique</span> remplacent les plaisirs terrestres par un horizon merveilleux.' },
+          { num: 4, cite: '« Heureusement vous êtes philosophe »', ref: '(l. 6)', citeClass: 'm1p4', analyse: 'La <span class="procede-type">captatio benevolentiae</span> flatte l\'esprit du lecteur.' }
+        ]
+      },
+      {
+        classe: 'mvt2', titre: 'Mouvement 2', soustitre: '— La Marquise, trophée philosophique (l. 7-14)',
+        procedes: [
+          { num: 1, cite: '« attiré Madame la Marquise dans le parti de la philosophie »', ref: '(l. 7-8)', citeClass: 'm2p1', analyse: 'La <span class="procede-type">métaphore de l\'engagement politique ou militaire</span> transforme la leçon en conquête.' },
+          { num: 2, cite: '« la beauté et la jeunesse sont toujours des choses d\'un grand prix »', ref: '(l. 9)', citeClass: 'm2p2', analyse: 'Le <span class="procede-type">lexique de l\'estimation</span> montre que la science s\'orne des atours de la séduction mondaine.' },
+          { num: 3, cite: '« elle ne ferait point mal de paraître sous une figure qui approchât un peu de celle de la Marquise »', ref: '(l. 10-12)', citeClass: 'm2p3', analyse: 'L\'<span class="procede-type">allégorie de la Sagesse</span> incarnée par la Marquise charnalise l\'abstraction.' },
+          { num: 4, cite: '« je suis persuadé que tout le monde courroit après la sagesse »', ref: '(l. 14)', citeClass: 'm2p4', analyse: 'L\'<span class="procede-type">hyperbole</span> souligne l\'efficacité de cette méthode d\'enseignement.' }
+        ]
+      },
+      {
+        classe: 'mvt3', titre: 'Mouvement 3', soustitre: '— L\'éloge d\'un esprit moderne (l. 14-20)',
+        procedes: [
+          { num: 1, cite: '« Ne vous attendez pourtant pas à entendre des merveilles »', ref: '(l. 14)', citeClass: 'm3p1', analyse: 'Le <span class="procede-type">parallélisme</span> prouve que la forme de la pensée compte autant que le fond.' },
+          { num: 2, cite: '« cette vivacité d\'intelligence »', ref: '(l. 17)', citeClass: 'm3p2', analyse: 'L\'<span class="procede-type">éloge explicite</span> définit l\'intuition vive comme supérieure à l\'érudition.' },
+          { num: 3, cite: '« l\'extrême facilité qu\'elle aurait à le devenir »', ref: '(l. 18-19)', citeClass: 'm3p3', analyse: 'La <span class="procede-type">question rhétorique</span> minimise l\'enseignement classique.' },
+          { num: 4, cite: '« à qui je refuserais, si j\'osais, le nom de savants »', ref: '(l. 20)', citeClass: 'm3p4', analyse: 'L\'emploi du <span class="procede-type">paradoxe</span> permet de critiquer ouvertement les pédants de l\'université.' }
+        ]
+      },
+      {
+        classe: 'mvt4', titre: 'Mouvement 4', soustitre: '— Le cadre narratif (l. 21-27)',
+        procedes: [
+          { num: 1, cite: '« je serois en droit de vous décrire le château »', ref: '(l. 22)', citeClass: 'm4p1', analyse: 'La <span class="procede-type">prétérition</span> évacue la description inutile pour valoriser le débat d\'idées.' },
+          { num: 2, cite: '« On a souvent décrit des châteaux pour de moindres occasions »', ref: '(l. 22)', citeClass: 'm4p2', analyse: 'La <span class="procede-type">prétérition</span> évacue la description inutile.' },
+          { num: 3, cite: '« et que j\'en fus fort aise »', ref: '(l. 24)', citeClass: 'm4p3', analyse: 'L\'insistance sur l\'<span class="procede-type">intimité</span> installe le climat de la confidence amoureuse.' },
+          { num: 4, cite: '« épuiser les nouvelles de Paris »', ref: '(l. 25-26)', citeClass: 'm4p4', analyse: 'L\'<span class="procede-type">hyperbole</span> montre la transition nécessaire entre le bavardage vain et la science.' },
+          { num: 5, cite: '« Je vous les diviserai par soirs »', ref: '(l. 27)', citeClass: 'm4p5', analyse: 'L\'annonce de la <span class="procede-type">structuration narrative</span> promet une progression typique des contes.' }
+        ]
+      }
+    ],
+    conclusionFull: 'Le cœur de la Préface est un éloge puissant des qualités intellectuelles de la femme. Le dispositif révèle un libertinage d\'idées où la science s\'affranchit des dogmes avec légèreté. La forme épistolaire apporte le réalisme nécessaire pour rendre l\'enseignement crédible.',
+    conclusionItems: [
+      { label: 'Éloge', text: 'Éloge puissant des qualités intellectuelles de la femme.' },
+      { label: 'Libertinage', text: 'Libertinage d\'idées : la science s\'affranchit des dogmes avec légèreté.' },
+      { label: 'Réalisme', text: 'La forme épistolaire rend l\'enseignement crédible.' }
+    ],
+    extra: {
+      motsCles: ['Captatio benevolentiae', 'Prétérition', 'Autodérision', 'Registre épistolaire', 'Allégorie de la Sagesse'],
+      contextePlus: 'La Préface est un genre littéraire codifié où l\'auteur justifie son œuvre. Fontenelle s\'y montre brillant rhétoricien : en faisant l\'éloge de la Marquise, il flatte aussi le lecteur mondain qui s\'identifie à elle.'
+    }
+  },
+  't5': {
+    author: 'fontenelle',
+    ref: 'Texte 5 · Entretiens sur la pluralité des mondes',
+    title: '« Enfin Copernic vint » — Premier Soir',
+    introText: `Le narrateur entreprend l'enseignement direct de la révolution copernicienne. Copernic renverse l'ordre antique en plaçant le Soleil au centre de l'univers, heurtant l'orgueil humain qui se croyait au cœur de la création. Fontenelle transforme ce bouleversement scientifique en véritable épopée comique, animant les planètes et personnifiant la Terre.`,
+    introKw: [
+      { label: 'Contexte', text: 'Enseignement direct de la révolution copernicienne.' },
+      { label: 'Enjeu', text: 'Renverser l\'ordre antique (géocentrisme → héliocentrisme).' }
+    ],
+    problematique: 'En quoi ce texte propose-t-il une cosmogonie à la fois épique et comique ?',
+    texteIntegral: `Il n'y a plus ici d'embarras inutiles, repris-je. Figurez-vous un Allemand nommé
+Copernic, qui <span class="m1p1">fait main basse sur tous ces cercles différens</span>, et sur tous ces cieux solides qui
+avoient été imaginés par l'Antiquité. Il détruit les uns, il met les autres en pièces. Saisi d'une
+<span class="m1p2">noble fureur d'astronome</span>, il <span class="m1p3">prend la Terre et l'envoie bien loin du centre de l'univers</span>, où elle
+s'étoit placée, et dans ce centre, il y met le Soleil, à qui cet honneur étoit bien mieux dû. Les
+planètes ne tournent plus autour de la Terre, et ne l'enferment plus au milieu du cercle qu'elles
+décrivent. Si elles nous éclairent, c'est en quelque sorte par hasard, et parce qu'elles nous
+rencontrent en leur chemin. Tout tourne présentement autour du Soleil, la Terre y tourne elle-
+même, et <span class="m1p4">pour la punir du long repos qu'elle s'étoit attribué</span>, Copernic la charge le plus qu'il
+peut de tous les mouvemens qu'elle donnoit aux planètes et aux cieux. Enfin de tout cet
+équipage céleste dont cette petite Terre se faisoit accompagner et environner, il ne lui est
+demeuré que la Lune qui tourne encore autour d'elle.
+
+<span class="m2p1">Attendez un peu, dit la Marquise, il vient de vous prendre un enthousiasme</span> qui vous a fait
+expliquer les choses si pompeusement, <span class="m2p2">que je ne crois pas les avoir entendues.</span> Le Soleil est au
+centre de l'univers, et là il est immobile, <span class="m2p3">après lui, qu'est-ce qui suit ?</span> C'est Mercure, répondis-
+je, il tourne autour du Soleil, en sorte que le Soleil est à peu près le centre du cercle que Mercure
+décrit. Au-dessus de Mercure est Vénus, qui tourne de même autour du Soleil. Ensuite vient la
+Terre qui, étant plus élevée que Mercure et Vénus, décrit autour du Soleil un plus grand cercle
+que ces planètes. Enfin suivent Mars, Jupiter, Saturne, selon l'ordre où je vous les nomme ; et
+vous voyez bien que Saturne doit décrire autour du Soleil le plus grand cercle de tous ; aussi
+<span class="m2p4">emploie-t-il plus de temps qu'aucune autre planète à faire sa révolution.</span>
+
+<span class="m3p1">Et la Lune, vous l'oubliez, interrompit-elle.</span> <span class="m3p2">Je la retrouverai bien</span> repris-je. La Lune tourne
+autour de la Terre et <span class="m3p3">ne l'abandonne point</span> ; mais comme la Terre avance toujours dans le cercle
+qu'elle décrit autour du Soleil, la Lune la suit, en tournant toujours autour d'elle ; et <span class="m3p4">si elle
+tourne autour du Soleil, ce n'est que pour ne point quitter la Terre.</span>`,
+    mouvements: [
+      {
+        classe: 'mvt1', titre: 'Mouvement 1', soustitre: '— La geste héroïque de Copernic (l. 1-12)',
+        procedes: [
+          { num: 1, cite: '« fait main basse »', ref: '(l. 2)', citeClass: 'm1p1', analyse: 'La <span class="procede-type">métaphore guerrière</span> présente Copernic comme le destructeur triomphant des erreurs antiques.' },
+          { num: 2, cite: '« noble fureur d\'astronome »', ref: '(l. 4)', citeClass: 'm1p2', analyse: 'L\'<span class="procede-type">oxymore</span> élève la passion scientifique froide au rang de fureur divine ou épique.' },
+          { num: 3, cite: '« il prend la Terre et l\'envoie bien loin du centre de l\'univers »', ref: '(l. 4-5)', citeClass: 'm1p3', analyse: 'La <span class="procede-type">personnification désinvolte</span> dégrade la Terre, la traitant comme un vulgaire caillou que l\'on jette.' },
+          { num: 4, cite: '« pour la punir du long repos qu\'elle s\'étoit attribué »', ref: '(l. 8-9)', citeClass: 'm1p4', analyse: 'La <span class="procede-type">personnification moralisatrice</span> justifie la mécanique gravitationnelle par une punition humoristique.' }
+        ]
+      },
+      {
+        classe: 'mvt2', titre: 'Mouvement 2', soustitre: '— La résistance du bon sens (l. 12-15)',
+        procedes: [
+          { num: 1, cite: '« Attendez un peu, dit la Marquise, il vient de vous prendre un enthousiasme »', ref: '(l. 13)', citeClass: 'm2p1', analyse: 'L\'<span class="procede-type">injonction</span> à l\'impératif incarne la résistance naturelle du bon sens.' },
+          { num: 2, cite: '« que je ne crois pas les avoir entendues »', ref: '(l. 15)', citeClass: 'm2p2', analyse: 'Cet <span class="procede-type">aveu d\'incompréhension</span> contraint le narrateur à la stricte pédagogie.' },
+          { num: 3, cite: '« après lui, qu\'est-ce qui suit ? »', ref: '(l. 16)', citeClass: 'm2p3', analyse: 'L\'<span class="procede-type">interrogation spatiale</span> recadre le discours sur des bases géométriques claires.' },
+          { num: 4, cite: '« emploie-t-il plus de temps qu\'aucune autre planète à faire sa révolution »', ref: '(l. 21)', citeClass: 'm2p4', analyse: 'L\'utilisation du <span class="procede-type">superlatif</span> pour Saturne exprime l\'immensité tout en la gardant mesurable.' }
+        ]
+      },
+      {
+        classe: 'mvt3', titre: 'Mouvement 3', soustitre: '— La cartographie du système + l\'orbite affective de la Lune (l. 21-26)',
+        procedes: [
+          { num: 1, cite: '« Et la Lune, vous l\'oubliez, interrompit-elle »', ref: '(l. 22)', citeClass: 'm3p1', analyse: 'L\'<span class="procede-type">interruption</span> prouve la réussite de la leçon : l\'élève détecte l\'anomalie du modèle.' },
+          { num: 2, cite: '« Je la retrouverai bien »', ref: '(l. 23)', citeClass: 'm3p2', analyse: 'L\'<span class="procede-type">ironie désinvolte</span> dédramatise la complexité de l\'univers.' },
+          { num: 3, cite: '« ne l\'abandonne point »', ref: '(l. 24)', citeClass: 'm3p3', analyse: 'L\'intense <span class="procede-type">personnification affective</span> transforme l\'attraction physique en fidélité conjugale.' },
+          { num: 4, cite: '« si elle tourne autour du Soleil, ce n\'est que pour ne point quitter la Terre »', ref: '(l. 25-26)', citeClass: 'm3p4', analyse: 'Cette <span class="procede-type">explication finaliste</span> donne un but émotionnel au mouvement mécanique, le rendant compréhensible pour une mondaine.' }
+        ]
+      }
+    ],
+    conclusionFull: 'La vulgarisation est totale : la science perd son opacité pour devenir un récit dynamique et épique. Le dialogue est structurel : les objections de la Marquise permettent d\'ancrer le nouveau savoir dans la clarté et le bon sens absolu.',
+    conclusionItems: [
+      { label: 'Vulgarisation', text: 'La science devient un récit dynamique et épique, perdant son opacité.' },
+      { label: 'Dialogue', text: 'Les objections de la Marquise ancrent le savoir dans la clarté et le bon sens.' }
+    ],
+    extra: {
+      motsCles: ['Oxymore (noble fureur)', 'Personnification des planètes', 'Métaphore guerrière', 'Ironie désinvolte', 'Geste héroïque'],
+      contextePlus: 'Fontenelle fait ici de la science une épopée. En héroïfiant Copernic et en personnifiant la Terre comme une paresseuse punie, il transforme l\'astronomie en récit moral, accessible et amusant pour son public mondain.'
+    }
+  },
+  't6': {
+    author: 'fontenelle',
+    ref: 'Texte 6 · Entretiens sur la pluralité des mondes',
+    title: '« Amour et astronomie » — Cinquième Soir',
+    introText: `L'apprentissage s'approfondit et le vertige de l'infini s'installe. Dans cet extrait du Cinquième Soir, Fontenelle met en œuvre une superposition brillante du discours de la séduction amoureuse et de la rigueur de la déduction scientifique. La Marquise commence à vraiment intégrer la pensée cosmique et à y projeter ses propres émotions.`,
+    introKw: [
+      { label: 'Contexte', text: 'Le vertige de l\'infini s\'installe dans l\'apprentissage.' },
+      { label: 'Enjeu', text: 'Superposition du discours amoureux et de la déduction scientifique.' }
+    ],
+    problematique: 'En quoi la science est-elle comme l\'amour ?',
+    texteIntegral: `Les autres mondes vous rendent celui-ci petit, mais <span class="m1p1">ils ne vous gâtent point de beaux
+yeux, ou une belle bouche</span>, cela vaut toujours son prix <span class="m1p2">en dépit de tous les mondes possibles.</span>
+<span class="m1p3">C'est une étrange chose que l'amour, répondit-elle, en riant</span> ; il se sauve de tout, et il n'y
+a point de système qui lui puisse faire de mal. Mais aussi parlez-moi franchement, votre système
+est-il bien vrai ? <span class="m1p4">Ne me déguisez rien, je vous garderai le secret.</span>
+
+<span class="m2p1">Je vous le garantis vrai, lui répondis-je, mais à condition que vous me garantirez votre
+discrétion</span> ; car vous sentez bien qu'il s'agit ici <span class="m2p2">d'ébranler tout ce que les hommes ont cru
+jusqu'ici de la situation de la Terre.</span> Voilà qui est fait, reprit-elle, <span class="m2p3">je suis du système de Copernic.</span>
+Mais attendez, faut-il que je croie que ces étoiles que je vois là, sont autant de soleils qui
+éclairent autant de mondes ? <span class="m2p4">Je vois bien que vous voudriez me faire peur.</span>
+
+<span class="m3p1">N'en ayez point</span>, lui dis-je ; <span class="m3p2">chaque étoile pourra bien être un soleil, mais elle ne nous éclaire
+point parce qu'elle est trop éloignée.</span> Depuis que je suis Copernicien, <span class="m3p3">je regarde les étoiles d'un
+autre œil</span> ; et ils me semblent de même. <span class="m3p4">Ce spectacle me surprend quelquefois jusqu'à en être
+éperdu.</span>`,
+    mouvements: [
+      {
+        classe: 'mvt1', titre: 'Mouvement 1', soustitre: '— L\'amour résiste à la science (l. 1-5)',
+        procedes: [
+          { num: 1, cite: '« ils ne vous gâtent point de beaux yeux, ou une belle bouche »', ref: '(l. 1-2)', citeClass: 'm1p1', analyse: 'La <span class="procede-type">concession galante</span> met en balance les deux systèmes de valeur : la cosmologie et la séduction amoureuse.' },
+          { num: 2, cite: '« en dépit de tous les mondes possibles »', ref: '(l. 2)', citeClass: 'm1p2', analyse: 'L\'<span class="procede-type">hyperbole ironique</span> affirme la supériorité du sentiment humain sur l\'infinité de l\'univers.' },
+          { num: 3, cite: '« C\'est une étrange chose que l\'amour, répondit-elle, en riant »', ref: '(l. 3)', citeClass: 'm1p3', analyse: 'La <span class="procede-type">maxime badine</span> et le rire de la Marquise illustrent l\'intelligence qui se joue des catégories.' },
+          { num: 4, cite: '« Ne me déguisez rien, je vous garderai le secret »', ref: '(l. 5)', citeClass: 'm1p4', analyse: 'Le <span class="procede-type">registre de la confidence amoureuse</span> transforme la demande d\'explication scientifique en confidence galante.' }
+        ]
+      },
+      {
+        classe: 'mvt2', titre: 'Mouvement 2', soustitre: '— La conversion de la Marquise (l. 6-11)',
+        procedes: [
+          { num: 1, cite: '« Je vous le garantis vrai, à condition que vous me garantirez votre discrétion »', ref: '(l. 6-7)', citeClass: 'm2p1', analyse: 'Le <span class="procede-type">pacte de complicité</span> (jeu de miroir sur "garantis") renforce la connivence intellectuelle entre les deux personnages.' },
+          { num: 2, cite: '« d\'ébranler tout ce que les hommes ont cru jusqu\'ici »', ref: '(l. 8)', citeClass: 'm2p2', analyse: 'Le <span class="procede-type">verbe "ébranler"</span> mesure l\'ampleur de la révolution copernicienne, dont la métaphore sismique traduit le choc culturel.' },
+          { num: 3, cite: '« je suis du système de Copernic »', ref: '(l. 9)', citeClass: 'm2p3', analyse: 'La <span class="procede-type">déclaration brusque</span> : la Marquise « adhère » à Copernic comme à un parti politique, montrant que la science est aussi une appartenance sociale.' },
+          { num: 4, cite: '« Je vois bien que vous voudriez me faire peur »', ref: '(l. 11)', citeClass: 'm2p4', analyse: 'La <span class="procede-type">résistance comique</span> face à l\'infini montre que la compréhension intellectuelle et la réaction émotionnelle coexistent.' }
+        ]
+      },
+      {
+        classe: 'mvt3', titre: 'Mouvement 3', soustitre: '— Le vertige de l\'infini (l. 12-16)',
+        procedes: [
+          { num: 1, cite: '« N\'en ayez point »', ref: '(l. 12)', citeClass: 'm3p1', analyse: 'L\'<span class="procede-type">injonction rassurante</span> du philosophe joue un rôle pédagogique : il doit apprivoiser la peur du vertige cosmique.' },
+          { num: 2, cite: '« chaque étoile pourra bien être un soleil, mais elle ne nous éclaire / point parce qu\'elle est trop éloignée »', ref: '(l. 12-13)', citeClass: 'm3p2', analyse: 'La <span class="procede-type">concession raisonnée</span> adopte le mode de la démonstration logique pour calmer l\'effroi.' },
+          { num: 3, cite: '« je regarde les étoiles d\'un / autre œil »', ref: '(l. 14-15)', citeClass: 'm3p3', analyse: 'La <span class="procede-type">métaphore du regard transformé</span> signale la conversion : la science change la façon de voir le monde, pas seulement de le concevoir.' },
+          { num: 4, cite: '« Ce spectacle me surprend quelquefois jusqu\'à en être / éperdu »', ref: '(l. 15-16)', citeClass: 'm3p4', analyse: 'L\'<span class="procede-type">aveu d\'éblouissement</span> introduit la notion de sublime scientifique : la science, comme l\'amour, peut provoquer le transport.' }
+        ]
+      }
+    ],
+    conclusionFull: 'Ce texte est la démonstration la plus achevée de la méthode de Fontenelle : il mêle la séduction amoureuse à la démonstration scientifique, faisant de la Marquise une élève brillante qui finit par se convertir librement à Copernic. L\'idée que la science et l\'amour partagent la même capacité à transformer le regard est l\'idée centrale et la plus moderne du texte.',
+    conclusionItems: [
+      { label: 'Conversion', text: 'La Marquise devient Copernicienne par adhésion libre, non par contrainte.' },
+      { label: 'Méthode', text: 'Mélange galant : la science et la séduction suivent les mêmes règles du jeu.' },
+      { label: 'Sublime', text: 'L\'infini, comme l\'amour, peut provoquer l\'effroi et l\'éblouissement.' }
+    ],
+    extra: {
+      motsCles: ['Concession galante', 'Pacte de complicité', 'Sublime scientifique', 'Registre de la confidence', 'Conversion à Copernic'],
+      contextePlus: 'Le Cinquième Soir est le moment culminant de l\'apprentissage dans les Entretiens. L\'infini des étoiles (idée de Giordano Bruno, brûlé pour cela) est désormais accepté par la Marquise. Fontenelle réussit à rendre acceptable ce qui était hérétique.'
+    }
+  },
+
+  // ============ RIMBAUD ============
+  't7': {
+    author: 'rimbaud',
+    ref: 'Texte 7 · Cahiers de Douai',
+    title: '« Les Effarés »',
+    introText: `Écrit en 1870, « Les Effarés » est l'un des premiers poèmes engagés de Rimbaud. Il décrit des enfants miséreux collés à la vitrine d'une boulangerie par un soir d'hiver, fascinés par la chaleur et le pain qu'ils ne peuvent atteindre. Le titre (« effarés » = effrayés, hébétés) annonce le registre pathétique et la violence sociale du poème.`,
+    introKw: [
+      { label: 'Contexte', text: 'Tableau de la misère enfantine dans la France du Second Empire.' },
+      { label: 'Enjeu', text: 'Réquisitoire social par le pathétique et la dénonciation implicite.' }
+    ],
+    problematique: 'En quoi ce poème est-il un tableau pathétique de la misère enfantine qui fait entendre une dénonciation sociale ?',
+    texteIntegral: `<span class="m1p1">Noirs dans la neige et dans la brume,</span>
+Au grand soupirail qui s'allume,
+Leurs culs ronds à <span class="m1p2">Leurs culs en rond</span>, 3
+<span class="m1p3">misère !</span>
+<span class="m1p4">Regardent le boulanger faire</span> 5
+<span class="m1p5">Le lourd pain blond</span>.
+
+Ils regardent le bras blanc qui tourne
+La pâte grise et qui l'enfourne
+Dans un <span class="m2p2">trou clair</span>.
+<span class="m2p3">Ils écoutent le bon pain cuire.</span> 10
+Le boulanger au gras sourire
+Grogne un vieil air.
+
+Ils sont blottis, pas un ne bouge,
+Au souffle du soupirail rouge
+Chaud comme un <span class="m2p6">Chaud comme un sein</span>. 16
+
+Quand, pour quelque médianoche,
+Façonné comme une brioche
+<span class="m3p1">Ils entendent sa voix</span>,
+<span class="m3p2">Les croûtes parfumées chantent</span>
+Et le boulanger <span class="m3p3">Chantent les croûtes parfumées</span>,
+<span class="m3p4">Souffle la vie en eux</span>, 22
+Les Pauvres Jésus pleins de givre,
+<span class="m3p4">Les pauvres petits pleins de givre</span> 26 !
+Regardent avec leurs <span class="m3p4">museaux roses</span>.
+
+Et quand minuit sonne et sonaille,
+Jésus-Christ en riant chatouille
+Leur minois <span class="m4p1">Mais bien bas, — comme une prière… »</span> 30
+Ils se resserrent pour chauffer
+<span class="m4p2">Repliés vers cette lumière</span> 32
+Leurs petits doigts roses.
+
+Et <span class="m4p3">Et que leur lange blanc tremblotte</span> 34
+<span class="m4p4">Au vent d'hiver…</span>`,
+    mouvements: [
+      {
+        classe: 'mvt1', titre: 'Mouvement 1', soustitre: '— La scène d\'ouverture : la fascination du pain (v. 1-6)',
+        procedes: [
+          { num: 1, cite: '« Noirs dans la neige et dans la brume »', ref: '(v. 1)', citeClass: 'm1p1', analyse: 'L\'<span class="procede-type">antithèse chromatique</span> (noir/blanc) souligne dès l\'ouverture l\'opposition entre misère et richesse, obscurité et lumière.' },
+          { num: 2, cite: '« Leurs culs en rond »', ref: '(v. 3)', citeClass: 'm1p2', analyse: 'L\'usage du <span class="procede-type">registre trivial</span> animalise les victimes, réduites à des corps souffrants.' },
+          { num: 3, cite: '« misère ! »', ref: '(v. 4)', citeClass: 'm1p3', analyse: 'Cette soudaine <span class="procede-type">apostrophe exclamative</span> traduit l\'indignation personnelle de Rimbaud.' },
+          { num: 4, cite: '« Regardent le boulanger faire »', ref: '(v. 5)', citeClass: 'm1p4', analyse: 'Le <span class="procede-type">verbe de perception passive</span> marque leur mise à l\'écart radicale du cycle de la nourriture.' },
+          { num: 5, cite: '« lourd pain blond »', ref: '(v. 6)', citeClass: 'm1p5', analyse: 'L\'<span class="procede-type">adjectif de matérialité</span> (« lourd ») et la couleur or (« blond ») sacralisent la richesse inaccessible.' }
+        ]
+      },
+      {
+        classe: 'mvt2', titre: 'Mouvement 2', soustitre: '— La féerie du démiurge (v. 7-15)',
+        procedes: [
+          { num: 1, cite: '« fort bras blanc qui tourne »', ref: '(v. 8)', citeClass: 'm2p1', analyse: 'L\'<span class="procede-type">allitération en [b]</span> et la <span class="procede-type">synecdoque</span> donnent au boulanger l\'apparence d\'une force créatrice mécanique et toute-puissante.' },
+          { num: 2, cite: '« trou clair »', ref: '(v. 9)', citeClass: 'm2p2', analyse: 'La <span class="procede-type">métaphore lumineuse</span> isole le four comme un centre de vie éclatant.' },
+          { num: 3, cite: '« Ils écoutent le bon pain cuire »', ref: '(v. 10)', citeClass: 'm2p3', analyse: 'L\'utilisation de la <span class="procede-type">synesthésie</span> montre leurs sens aiguisés par l\'odeur et la faim.' },
+          { num: 4, cite: '« au gras sourire »', ref: '(v. 11-12)', citeClass: 'm2p4', analyse: 'L\'<span class="procede-type">adjectif péjoratif</span> (« gras ») traduit le dégoût du poète pour l\'indifférence cruelle des nantis face au besoin.' },
+          { num: 5, cite: '« blottis, pas un ne bouge »', ref: '(v. 14)', citeClass: 'm2p5', analyse: 'L\'<span class="procede-type">attitude d\'animalisation de survie</span> évoque des bêtes terrées contre le froid.' },
+          { num: 6, cite: '« Chaud comme un sein »', ref: '(v. 16)', citeClass: 'm2p6', analyse: 'La <span class="procede-type">comparaison maternelle</span> d\'une immense cruauté souligne que la seule "mère" de ces enfants est une machine industrielle.' }
+        ]
+      },
+      {
+        classe: 'mvt3', titre: 'Mouvement 3', soustitre: '— La chaleur matricielle (v. 19-27)',
+        procedes: [
+          { num: 1, cite: '« Chantent les croûtes parfumées »', ref: '(v. 21)', citeClass: 'm3p1', analyse: 'La <span class="procede-type">personnification</span> anime le pain, exacerbant la torture sensorielle.' },
+          { num: 2, cite: '« souffle la vie »', ref: '(v. 22)', citeClass: 'm3p2', analyse: 'La <span class="procede-type">métaphore vitale</span> — le trou chaud "souffle la vie" — crée un paradoxe cruel (le four nourrit mais ils n\'ont rien à manger).' },
+          { num: 3, cite: '« Les pauvres petits pleins de givre ! »', ref: '(v. 26)', citeClass: 'm3p3', analyse: 'L\'<span class="procede-type">antithèse</span> saisissante entre la misère textile (« haillons ») et l\'élévation spirituelle (« âme ») sacralise leur souffrance.' },
+          { num: 4, cite: '« museaux roses »', ref: '(v. 27)', citeClass: 'm3p4', analyse: 'La <span class="procede-type">métaphore animale et chromatique</span> allie la dégradation de la misère à l\'innocence enfantine.' }
+        ]
+      },
+      {
+        classe: 'mvt4', titre: 'Mouvement 4', soustitre: '— Le réveil à l\'atrocité (v. 30-36)',
+        procedes: [
+          { num: 1, cite: '« Mais bien bas, — comme une prière… »', ref: '(v. 30)', citeClass: 'm4p1', analyse: 'La <span class="procede-type">comparaison religieuse explicite</span> dévoile l\'impuissance absolue de l\'humain face à la faim.' },
+          { num: 2, cite: '« Repliés vers cette lumière »', ref: '(v. 32)', citeClass: 'm4p2', analyse: 'La <span class="procede-type">métaphore sacrée</span> du four comme paradis terrestre condamne une société qui affame ses membres.' },
+          { num: 3, cite: '« Et que leur lange blanc tremblotte »', ref: '(v. 34)', citeClass: 'm4p3', analyse: 'Le <span class="procede-type">détail pathétique de la prime enfance</span> (« lange ») fige les victimes dans la cruauté du vent hivernal.' },
+          { num: 4, cite: '« Au vent d\'hiver… »', ref: '(v. 35)', citeClass: 'm4p4', analyse: 'Le <span class="procede-type">verbe vulgaire et violent</span> « crèvent » brise la liturgie ; « Au vent d\'hiver » en chute ouverte prolonge l\'image de la souffrance au-delà du poème.' }
+        ]
+      }
+    ],
+    conclusionFull: 'Rimbaud offre un tableau profondément pathétique de la misère urbaine. La féerie chaude du pain rend l\'indifférence humaine encore plus douce-amère et insoutenable. Le poème, puissant réquisitoire social contre le Second Empire, se hisse au niveau des grandes figures littéraires comme Les Misérables.',
+    conclusionItems: [
+      { label: 'Tableau', text: 'Tableau profondément pathétique de la misère urbaine.' },
+      { label: 'Féerie', text: 'La chaleur du pain rend l\'indifférence encore plus douce-amère.' },
+      { label: 'Dénonciation', text: 'Puissant réquisitoire social contre le Second Empire.' },
+      { label: 'Références', text: 'Se hisse au niveau des Misérables de Victor Hugo.' }
+    ],
+    extra: {
+      motsCles: ['Synesthésie', 'Animalisation des enfants', 'Comparaison maternelle (le sein du four)', 'Lexique liturgique', 'Registre pathétique'],
+      contextePlus: 'Le poème a été composé en septembre 1870. Les « Effarés » illustrent la méthode de Rimbaud : partir d\'une scène réelle et banale (des enfants qui regardent une boulangerie) pour créer un tableau universel de la pauvreté et de l\'injustice sociale.'
+    }
+  },
+  't8': {
+    author: 'rimbaud',
+    ref: 'Texte 8 · Cahiers de Douai',
+    title: '« Le Mal »',
+    introText: `Ce sonnet virulent prend racine dans la débâcle de la guerre franco-prussienne (1870). L'horreur des champs de bataille pousse Rimbaud, seize ans, à une mise en accusation sans appel des responsables humains, mais aussi et surtout de l'indifférence divine. Le titre, « Le Mal », a une double signification : le mal de la guerre et le mal moral de ceux qui en sont responsables.`,
+    introKw: [
+      { label: 'Contexte', text: 'Sonnet né de la débâcle de la guerre franco-prussienne.' },
+      { label: 'Enjeu', text: 'Mise en accusation des responsables humains et de l\'indifférence divine.' }
+    ],
+    problematique: 'En quoi ce texte est-il un sonnet politique antimilitariste et anticlérical ?',
+    texteIntegral: `Tandis que <span class="m1p1">les crachats rouges de la mitraille</span>
+<span class="m1p2">Sifflent tout le jour par l'infini du ciel bleu</span> ;
+Qu'écarlates ou verts, près du <span class="m1p3">Roi qui les raille</span>.
+<span class="m1p4">Croulent les bataillons</span> en masse dans le feu ;
+Tandis qu'une <span class="m2p1">folie épouvantable, broie</span> 5
+Et fait de cent milliers d'hommes <span class="m2p2">un tas fumant</span> ;
+— <span class="m2p3">Pauvres morts ! dans l'été, dans l'herbe, dans ta joie,</span>
+<span class="m2p4">Nature ! ô toi qui fis ces hommes saintement !</span>… —
+
+— Il est un Dieu, qui <span class="m3p1">rit aux nappes damassées
+Des autels, à l'encens, aux grands calices d'or</span> ; 10
+<span class="m3p2">Qui dans le bercement des hosannah s'endort.</span>
+Et se réveille, quand des mères, ramassées
+Dans l'angoisse, et <span class="m4p1">pleurant sous leur vieux bonnet noir</span>,
+<span class="m4p2">Lui donnent un gros sou lié dans leur mouchoir !</span>`,
+    mouvements: [
+      {
+        classe: 'mvt1', titre: 'Mouvement 1', soustitre: '— L\'horreur aveugle et mécanique (v. 1-4)',
+        procedes: [
+          { num: 1, cite: '« les crachats rouges de la mitraille »', ref: '(v. 1)', citeClass: 'm1p1', analyse: 'La <span class="procede-type">métaphore organique hideuse</span> (« crachats ») dépouille la guerre de toute grandeur épique, la rendant écœurante.' },
+          { num: 2, cite: '« l\'infini du ciel bleu »', ref: '(v. 2)', citeClass: 'm1p2', analyse: 'La pureté de cette <span class="procede-type">antithèse chromatique</span> (bleu du ciel / rouge du sang) accuse l\'impassibilité du monde face au massacre.' },
+          { num: 3, cite: '« Roi qui les raille »', ref: '(v. 3)', citeClass: 'm1p3', analyse: 'L\'<span class="procede-type">allitération gutturale en [r]</span> souligne la violence de l\'attaque politique directe contre des souverains indifférents.' },
+          { num: 4, cite: '« Croulent les bataillons »', ref: '(v. 4)', citeClass: 'm1p4', analyse: 'L\'<span class="procede-type">inversion syntaxique</span> mettant le verbe de chute dramatique en tête de vers illustre l\'anéantissement de masse et la déshumanisation absolue.' }
+        ]
+      },
+      {
+        classe: 'mvt2', titre: 'Mouvement 2', soustitre: '— La Nature profanée par l\'industrie de mort (v. 5-8)',
+        procedes: [
+          { num: 1, cite: '« folie épouvantable, broie »', ref: '(v. 5)', citeClass: 'm2p1', analyse: 'La violente <span class="procede-type">personnification</span> et l\'<span class="procede-type">enjambement</span> transforment la guerre en une machine infernale et dévorante.' },
+          { num: 2, cite: '« un tas fumant »', ref: '(v. 6)', citeClass: 'm2p2', analyse: 'La terrible <span class="procede-type">métaphore réifiante</span> anéantit l\'individualité de « cent milliers d\'hommes », les ravalant au rang d\'ordures.' },
+          { num: 3, cite: '« Pauvres morts ! dans l\'été, dans l\'herbe, dans ta joie »', ref: '(v. 7)', citeClass: 'm2p3', analyse: 'L\'<span class="procede-type">anaphore</span> rythme le contraste cruel entre le printemps verdoyant et la rigidité cadavérique.' },
+          { num: 4, cite: '« Nature ! ô toi qui fis ces hommes saintement ! »', ref: '(v. 8)', citeClass: 'm2p4', analyse: 'L\'<span class="procede-type">apostrophe lyrique païenne</span> accuse par contraste l\'impiété des chefs de guerre qui détruisent la création.' }
+        ]
+      },
+      {
+        classe: 'mvt3', titre: 'Mouvement 3', soustitre: '— Le cynisme luxueux de Dieu (v. 9-12)',
+        procedes: [
+          { num: 1, cite: '« rit aux nappes damassées / Des autels, à l\'encens, aux grands calices d\'or »', ref: '(v. 9-10)', citeClass: 'm3p1', analyse: 'La saturation du <span class="procede-type">champ lexical de l\'opulence religieuse</span> fustige la richesse obscène d\'une Église coupée de son peuple.' },
+          { num: 2, cite: '« Qui dans le bercement des hosannah s\'endort »', ref: '(v. 11)', citeClass: 'm3p2', analyse: 'La <span class="procede-type">métaphore du sommeil</span> révèle l\'hypocrisie des rituels qui servent uniquement d\'œillères pour ignorer le Mal.' }
+        ]
+      },
+      {
+        classe: 'mvt4', titre: 'Mouvement 4', soustitre: '— Le scandale vénal de l\'Église (v. 13-14)',
+        procedes: [
+          { num: 1, cite: '« pleurant sous leur vieux bonnet noir »', ref: '(v. 13)', citeClass: 'm4p1', analyse: 'Ce <span class="procede-type">détail réaliste et chromatique</span> (le deuil populaire) contraste violemment avec les « calices d\'or » de l\'institution.' },
+          { num: 2, cite: '« Lui donnent un gros sou lié dans leur mouchoir ! »', ref: '(v. 14)', citeClass: 'm4p2', analyse: 'La redoutable <span class="procede-type">chute ironique</span> prouve que la religion n\'est qu\'un commerce : Dieu n\'accorde son attention qu\'au prix d\'une tractation financière sur le sang versé.' }
+        ]
+      }
+    ],
+    conclusionFull: 'Le poème dresse le réquisitoire d\'un massacre inutile orchestré par la folie des rois. Il dépasse l\'antimilitarisme pour dénoncer les abus d\'une Église corrompue et indifférente. Grâce à ses puissantes hypotyposes, le poète exalte le pathétique pour asseoir une idée politique claire : face à la monarchie et au catholicisme, seul le peuple paie le prix du sang et des larmes.',
+    conclusionItems: [
+      { label: 'Massacre', text: 'Réquisitoire d\'un massacre inutile orchestré par la folie des rois.' },
+      { label: 'Abus', text: 'Dénonciation des abus d\'une Église corrompue et indifférente.' },
+      { label: 'Rhétorique', text: 'Puissantes hypotyposes qui renforcent le sentiment pathétique.' },
+      { label: 'Victimes', text: 'Seul le peuple paie le prix du sang et des larmes face à la monarchie et au catholicisme.' }
+    ],
+    extra: {
+      motsCles: ['Hypotypose', 'Antimilitarisme', 'Anticléricalisme', 'Inversion syntaxique', 'Chute ironique (gros sou)'],
+      contextePlus: 'Le Mal est écrit dans le contexte dramatique de la guerre franco-prussienne de 1870. Rimbaud, qui a seize ans, exprime une fureur politique rare à son âge. Le sonnet respecte la forme classique (deux quatrains, deux tercets) mais la dynamite de l\'intérieur par son contenu révolutionnaire.'
+    }
+  },
+  't9': {
+    author: 'rimbaud',
+    ref: 'Texte 9 · Cahiers de Douai',
+    title: '« Au Cabaret-vert, cinq heures du soir »',
+    introText: `Écrit lors de la fugue de Rimbaud en Belgique (août 1870), ce sonnet met en scène une pause dans un bistrot de Charleroi après une longue marche. Rimbaud, seize ans, détourne la forme noble du sonnet pour en faire un tableau réaliste et truculant de la vie ordinaire. Ce poème est une révolution esthétique : le trivial devient poétique.`,
+    introKw: [
+      { label: 'Contexte', text: 'Fugue de Rimbaud en Belgique, été 1870.' },
+      { label: 'Enjeu', text: 'Détournement du sonnet classique au profit d\'un réalisme trivial et savoureux.' }
+    ],
+    problematique: 'En quoi a-t-on affaire à un sonnet réaliste qui dresse un tableau ordinaire ?',
+    texteIntegral: `<span class="m1p1">Depuis huit jours</span>, j'<span class="m1p2">avais déchiré</span> <span class="m1p3">mes bottines
+Aux cailloux des chemins</span>. <span class="m1p4">J'entrais à Charleroi</span>.
+<span class="m2p1">— Au Cabaret-Vert</span> : je demandai <span class="m2p2">des tartines
+De beurre</span> et du <span class="m2p3">jambon</span> <span class="m2p4">qui fût à moitié froid</span>.
+
+<span class="m3p1">Bienheureux</span>, j'allongeai les jambes sous la table
+Verte : je contemplai les sujets très naïfs
+De la tapisserie. — Et ce fut adorable,
+Quand la <span class="m3p2">fille aux tétons énormes, aux yeux vifs</span>,
+
+<span class="m3p3">— Celle-là, ce n'est pas un baiser qui l'épeure ! —</span>
+<span class="m3p4">Rieuse, m'apporta des tartines de beurre</span>,
+<span class="m4p1">Du jambon</span> tiède, dans un <span class="m4p2">plat colorié</span>,
+
+<span class="m4p1">Du jambon rose et blanc</span> parfumé d'une gousse
+<span class="m4p3">D'ail</span>, — et m'emplit la chope immense, avec sa mousse
+<span class="m4p4">Que dorait un rayon de soleil arriéré</span>.`,
+    mouvements: [
+      {
+        classe: 'mvt1', titre: 'Mouvement 1', soustitre: '— L\'errance en Belgique (v. 1-2)',
+        procedes: [
+          { num: 1, cite: '« Depuis huit jours »', ref: '(v. 1)', citeClass: 'm1p1', analyse: 'Ce <span class="procede-type">complément circonstanciel de temps</span> inscrit immédiatement le poème dans une réalité concrète et prosaïque. Il insiste sur la durée de la marche et l\'épuisement du poète.' },
+          { num: 2, cite: '« avais déchiré »', ref: '(v. 1)', citeClass: 'm1p2', analyse: 'Le <span class="procede-type">verbe au plus-que-parfait</span> insiste sur l\'accompli et l\'usure physique matérielle. L\'action poétique n\'est pas idéalisée : elle abîme les vêtements.' },
+          { num: 3, cite: '« déchiré mes bottines / Aux cailloux des chemins »', ref: '(v. 1-2)', citeClass: 'm1p3', analyse: 'L\'<span class="procede-type">enjambement / rejet</span> mime le trébuchement du marcheur fatigué. Le lexique trivial (« bottines », « cailloux ») brise délibérément le lyrisme poétique traditionnel.' },
+          { num: 4, cite: '« J\'entrais à Charleroi »', ref: '(v. 2)', citeClass: 'm1p4', analyse: 'L\'<span class="procede-type">ancrage spatial précis (toponyme)</span> désigne une ville industrielle belge, ancrant le poème dans un réalisme brut, loin des paysages romantiques habituels.' }
+        ]
+      },
+      {
+        classe: 'mvt2', titre: 'Mouvement 2', soustitre: '— La commande passée (v. 3-4)',
+        procedes: [
+          { num: 1, cite: '« — Au Cabaret-Vert : »', ref: '(v. 3)', citeClass: 'm2p1', analyse: 'Le <span class="procede-type">tiret typographique</span> marque une rupture avec l\'errance. Il introduit la scène d\'intérieur de manière presque théâtrale et très abrupte.' },
+          { num: 2, cite: '« des tartines / De beurre »', ref: '(v. 3-4)', citeClass: 'm2p2', analyse: 'L\'<span class="procede-type">enjambement de la faim</span> : ce débordement sur le vers suivant mime l\'impatience et la faim vorace de l\'adolescent.' },
+          { num: 3, cite: '« tartines », « beurre », « jambon »', ref: '(v. 3-4)', citeClass: 'm2p3', analyse: 'Le <span class="procede-type">champ lexical de la nourriture triviale</span> déconstruit les codes du sonnet classique, habituellement réservé à l\'amour ou au spirituel.' },
+          { num: 4, cite: '« qui fût à moitié froid »', ref: '(v. 4)', citeClass: 'm2p4', analyse: 'Le <span class="procede-type">subjonctif imparfait ironique</span> crée un décalage comique entre ce temps verbal très soutenu et noble, et l\'objet très banal et décevant qu\'il qualifie (un jambon tiède).' }
+        ]
+      },
+      {
+        classe: 'mvt3', titre: 'Mouvement 3', soustitre: '— L\'évocation de la serveuse (v. 5-10)',
+        procedes: [
+          { num: 1, cite: '« Bienheureux, »', ref: '(v. 5)', citeClass: 'm3p1', analyse: 'L\'<span class="procede-type">adjectif détaché en tête de vers</span> traduit une béatitude totale pour des plaisirs purement matériels (s\'asseoir, manger). Le trivial accède à une dignité quasi religieuse.' },
+          { num: 2, cite: '« fille aux tétons énormes, aux yeux vifs »', ref: '(v. 8)', citeClass: 'm3p2', analyse: 'Les <span class="procede-type">synecdoques / portrait trivial</span> morcelent la description de la serveuse et mettent en avant une sensualité populaire, typique de la peinture flamande.' },
+          { num: 3, cite: '« — Celle-là, ce n\'est pas un baiser qui l\'épeure ! — »', ref: '(v. 9)', citeClass: 'm3p3', analyse: 'L\'intrusion du <span class="procede-type">discours direct</span>, avec une syntaxe orale et familière, renforce le réalisme et l\'authenticité de la scène de bistrot.' },
+          { num: 4, cite: '« Rieuse, m\'apporta des tartines de beurre »', ref: '(v. 10)', citeClass: 'm3p4', analyse: 'Les <span class="procede-type">allitérations en [R] et [T]</span> créent des sonorités joyeuses et claquantes qui miment la vivacité et le dynamisme de la serveuse.' }
+        ]
+      },
+      {
+        classe: 'mvt4', titre: 'Mouvement 4', soustitre: '— La commande servie (v. 11-14)',
+        procedes: [
+          { num: 1, cite: '« Du jambon » (v. 4, v. 10, v. 11)', ref: '(répétition)', citeClass: 'm4p1', analyse: 'L\'<span class="procede-type">anaphore / répétition gourmande</span> traduit la fascination matérielle et la gourmandise du poète affamé. Ce retour du même mot est le leitmotiv comique du sonnet.' },
+          { num: 2, cite: '« Du jambon rose et blanc » / « plat colorié »', ref: '(v. 11-12)', citeClass: 'm4p2', analyse: 'Le <span class="procede-type">contraste coloré</span> transforme le poème en un véritable tableau de genre (nature morte), s\'inscrivant dans la tradition de la peinture réaliste flamande.' },
+          { num: 3, cite: '« D\'ail, — »', ref: '(v. 12)', citeClass: 'm4p3', analyse: 'Le <span class="procede-type">rejet trivial</span> : placer le mot « ail » en tête de vers provoque un choc olfactif et esthétique. C\'est le summum de l\'anti-poétisme assumé par Rimbaud.' },
+          { num: 4, cite: '« Que dorait un rayon de soleil arriéré »', ref: '(v. 14)', citeClass: 'm4p4', analyse: 'La <span class="procede-type">personnification / métaphore lumineuse</span> transfigure la scène banale (la chope de bière). Le trivial devient poétique grâce à cette lumière chaleureuse de fin de journée.' }
+        ]
+      }
+    ],
+    conclusionFull: 'Ce poème est bien un sonnet (forme poétique noble et stricte), mais Rimbaud le détourne totalement pour en faire un tableau réaliste. En utilisant un lexique trivial (tartines, ail, tétons), en décrivant des besoins purement physiologiques (la faim, la fatigue) et en peignant une scène de bistrot populaire, il prouve que la poésie n\'a pas besoin de sujets grandioses. Le banal et l\'ordinaire, éclairés par le regard du poète (le « rayon de soleil »), deviennent de la matière poétique à part entière.',
+    conclusionItems: [
+      { label: 'Forme', text: 'Sonnet détourné : la forme noble mise au service du trivial.' },
+      { label: 'Réalisme', text: 'Lexique prosaïque (bottines, tartines, ail) : anti-poétisme assumé.' },
+      { label: 'Sensualité', text: 'Portrait truculant de la serveuse, héritage de la peinture flamande.' },
+      { label: 'Transfiguration', text: 'Le « rayon de soleil » élève le banal à la dignité poétique.' }
+    ],
+    extra: {
+      motsCles: ['Détournement du sonnet', 'Subjonctif imparfait ironique', 'Rejet trivial (l\'ail)', 'Synesthésie', 'Transfiguration du banal'],
+      contextePlus: 'Rimbaud a écrit ce poème lors de sa première grande fugue, en août 1870. Il a seize ans et marche jusqu\'en Belgique. Ce contexte autobiographique explique l\'authenticité de la scène et la jubilation sincère du poète face aux plaisirs simples.'
+    }
+  },
+
+  // ============ PRÉVOST ============
+  't10': {
+    author: 'prevost',
+    ref: 'Texte 10 · Manon Lescaut',
+    title: '« Rencontre » — La première rencontre avec Manon',
+    introText: `Cet extrait correspond au moment où le jeune Des Grieux, au retour de ses études, croise Manon Lescaut dans la cour d'une hôtellerie à Amiens. Ce tableau du coup de foudre fondateur est raconté des années après par un Des Grieux devenu adulte, conscient du malheur que cette rencontre lui a causé. Cette double temporalité est le cœur dramatique du texte.`,
+    introKw: [
+      { label: 'Contexte', text: 'Coup de foudre fondateur : Amiens, hôtellerie, arrivée du coche.' },
+      { label: 'Enjeu', text: 'Double temporalité : le jeune amant et le narrateur âgé qui connaît la fin tragique.' }
+    ],
+    problematique: 'En quoi le récit de la première rencontre fonctionne-t-il comme une situation initiale avec un double message (le coup de foudre et la fatalité tragique) ?',
+    texteIntegral: `<span class="m1p1">Hélas ! que ne le marquais-je un jour plus tôt !</span> J'aurais conservé ma liberté et ma tranquillité. J'étais <span class="m1p2">à me promener</span> avec mon ami Tiberge, lorsque <span class="m1p2">nous vîmes arriver</span> le coche d'Arras, et que nous nous arrêtâmes à regarder descendre les passagers. <span class="m1p3">Il en sortit quelques femmes</span>, qui se retirèrent aussitôt. Mais <span class="m1p4">il en resta une, qui s'arrêta seule</span> dans la cour, pendant qu'un homme d'un certain âge s'empressait pour faire tirer son équipage des paniers. Elle me parut <span class="m2p1">si charmante que moi, qui n'avais jamais pensé à la différence des sexes, je me trouvai enflammé tout d'un coup jusqu'au transport.</span> J'avais le défaut d'être <span class="m2p3">excessivement timide</span> et facile à déconcerter ; mais loin d'être arrêté alors par cette faiblesse, <span class="m2p3">je m'avançai</span> vers <span class="m2p4">la maîtresse de mon cœur.</span> Quoiqu'elle fût encore moins âgée que moi, elle reçut mes politesses sans paraître embarrassée. Je lui demandai ce qui l'amenait à Amiens et si elle y avait quelques personnes de connaissance. Elle me dit ingénument qu'elle y était envoyée par ses parents pour être religieuse. <span class="m3p1">L'amour me rendait déjà si éclairé</span>, depuis un moment qu'il était dans mon cœur, que je regardai ce dessein comme <span class="m3p2">un coup mortel pour mes désirs.</span> Je lui parlai d'une manière qui lui fit comprendre mes sentiments, <span class="m3p3">car elle était bien plus expérimentée que moi.</span> C'était malgré elle qu'on l'envoyait au couvent, pour arrêter sans doute son penchant au plaisir, <span class="m4p1">qui a causé, dans la suite, tous ses malheurs et les miens.</span> Je combattis la cruelle intention de ses parents par toutes les raisons que l'amour naissant m'inspirèrent. <span class="m4p2">Elle n'affecta ni rigueur ni dédain.</span> <span class="m4p3">Elle me dit</span>, après un moment de silence, <span class="m4p3">qu'elle prévoyait</span> bien qu'elle serait malheureuse, mais que c'était apparemment la <span class="m4p4">volonté du Ciel</span>, puisqu'il ne lui laissait <span class="m4p4">nul moyen de l'éviter.</span>`,
+    mouvements: [
+      {
+        classe: 'mvt1', titre: 'Mouvement 1', soustitre: '— Arrivée à l\'hôtellerie (l. 1-6)',
+        procedes: [
+          { num: 1, cite: '« Hélas ! que ne le marquais-je un jour plus tôt ! »', ref: '(l. 1)', citeClass: 'm1p1', analyse: 'La <span class="procede-type">prolepse tragique (anticipation)</span> : l\'interjection de regret et l\'anticipation annoncent d\'emblée que cette rencontre sera la source d\'un grand malheur. C\'est le premier message tragique adressé au lecteur.' },
+          { num: 2, cite: '« à me promener » / « nous vîmes arriver »', ref: '(l. 2-4)', citeClass: 'm1p2', analyse: 'Le <span class="procede-type">champ lexical de la naïveté</span> insiste sur la pureté initiale de Des Grieux. Il est une page blanche, ce qui rendra sa chute morale d\'autant plus brutale.' },
+          { num: 3, cite: '« Il en sortit quelques femmes »', ref: '(l. 5)', citeClass: 'm1p3', analyse: 'L\'<span class="procede-type">alternance imparfait / passé simple</span> et le <span class="procede-type">pluriel indéfini</span> servent de repoussoir pour mieux mettre en valeur l\'apparition unique de Manon qui va suivre.' },
+          { num: 4, cite: '« il en resta une... qui s\'arrêta seule »', ref: '(l. 6)', citeClass: 'm1p4', analyse: 'Le <span class="procede-type">connecteur d\'opposition et isolement</span> singularise immédiatement Manon. Elle est mise en valeur par son isolement au milieu de l\'agitation, lui conférant une dimension quasi mystique.' }
+        ]
+      },
+      {
+        classe: 'mvt2', titre: 'Mouvement 2', soustitre: '— Premier portrait de la jeune femme (l. 6-12)',
+        procedes: [
+          { num: 1, cite: '« si charmante que moi... je me trouvai enflammé tout d\'un coup jusqu\'au transport »', ref: '(l. 8-10)', citeClass: 'm2p1', analyse: 'L\'<span class="procede-type">hyperbole du coup de foudre</span> : la violence des sentiments est totale et immédiate. La passion est décrite comme un feu dévastateur qui consume instantanément le jeune homme.' },
+          { num: 2, cite: '« la maîtresse de mon cœur »', ref: '(l. 12)', citeClass: 'm2p4', analyse: 'La <span class="procede-type">périphrase amoureuse</span> : dès le premier regard, Des Grieux se soumet totalement à Manon. Le vocabulaire de la soumission féodale signifie qu\'il perd son libre arbitre.' },
+          { num: 3, cite: '« excessivement timide » / « je m\'avançai »', ref: '(l. 11-12)', citeClass: 'm2p3', analyse: 'L\'<span class="procede-type">antithèse de caractère</span> montre que l\'amour a un pouvoir métamorphique absolu sur Des Grieux, lui donnant un courage inédit.' },
+          { num: 4, cite: 'Agitation des autres / immobilité de Manon', ref: '(l. 6-7)', citeClass: '', analyse: 'L\'<span class="procede-type">antithèse de mouvement</span> oppose l\'agitation des passagers à l\'immobilité de Manon (« resta », « s\'arrêta »), lui donnant une dimension quasi mystique, celle d\'une apparition.' }
+        ]
+      },
+      {
+        classe: 'mvt3', titre: 'Mouvement 3', soustitre: '— Réactions de Des Grieux (l. 12-18)',
+        procedes: [
+          { num: 1, cite: '« L\'amour me rendait déjà si éclairé »', ref: '(l. 15-16)', citeClass: 'm3p1', analyse: 'La <span class="procede-type">métaphore de l\'illumination</span> présente l\'amour comme une force divine et un guide qui lui donne de la clairvoyance (même si c\'est une illusion tragique).' },
+          { num: 2, cite: '« un coup mortel pour mes désirs »', ref: '(l. 17)', citeClass: 'm3p2', analyse: 'La <span class="procede-type">métaphore de la blessure mortelle</span> lie dès la première rencontre l\'amour à la souffrance et à la mort, renforçant la dimension fatale (double message).' },
+          { num: 3, cite: '« car elle était bien plus expérimentée que moi »', ref: '(l. 18)', citeClass: 'm3p3', analyse: 'La <span class="procede-type">comparaison de maturité</span> annonce les rôles futurs : Manon dominera la relation par sa malice, tandis que Des Grieux subira par naïveté.' }
+        ]
+      },
+      {
+        classe: 'mvt4', titre: 'Mouvement 4', soustitre: '— Premier entretien entre les deux jeunes gens (l. 18-24)',
+        procedes: [
+          { num: 1, cite: '« qui a causé, dans la suite, tous ses malheurs et les miens »', ref: '(l. 19-20)', citeClass: 'm4p1', analyse: 'L\'<span class="procede-type">intervention du narrateur proleptique</span> : c\'est le regard du Des Grieux âgé qui rappelle le second message — la fatalité de leur destruction mutuelle. Ce double niveau temporel est au cœur du roman.' },
+          { num: 2, cite: '« Elle n\'affecta ni rigueur ni dédain »', ref: '(l. 22)', citeClass: 'm4p2', analyse: 'Le <span class="procede-type">rythme binaire de la facilité</span> : Manon est d\'un abord facile, contrairement aux héroïnes précieuses de l\'époque. Elle accepte la séduction instantanément, annonce de sa légèreté.' },
+          { num: 3, cite: '« volonté du Ciel », « nul moyen de l\'éviter »', ref: '(l. 24)', citeClass: 'm4p4', analyse: 'Le <span class="procede-type">champ lexical de la fatalité divine</span> : les personnages excusent leur passion en la mettant sur le compte du destin, se dédouanant ainsi de toute responsabilité morale.' },
+          { num: 4, cite: '« Elle me dit... qu\'elle prévoyait... »', ref: '(l. 23)', citeClass: 'm4p3', analyse: 'Le <span class="procede-type">discours indirect</span> accélère la scène et montre la connivence qui s\'établit instantanément entre eux, scellant leur pacte fatal dès la première rencontre.' }
+        ]
+      }
+    ],
+    conclusionFull: 'Ce texte fonctionne comme une situation initiale parfaite de « rencontre amoureuse » (le topos du coup de foudre), transformant le jeune Des Grieux timide en amant passionné. Cependant, elle porte un double message fondamental : la passion fulgurante qui unit les amants est intrinsèquement liée à la mort, au destin et au malheur. Les nombreuses interventions du narrateur âgé transforment cette naissance de l\'amour en annonce d\'une tragédie inévitable.',
+    conclusionItems: [
+      { label: 'Coup de foudre', text: 'Topos de la rencontre amoureuse : transformation immédiate du timide Des Grieux.' },
+      { label: 'Fatalité', text: 'Double message : la passion est liée d\'emblée à la mort et au malheur.' },
+      { label: 'Double temporalité', text: 'Les interventions du narrateur âgé transforment le coup de foudre en annonce tragique.' },
+      { label: 'Manon', text: 'Mystérieuse, plus expérimentée, elle impose sa domination dès la première rencontre.' }
+    ],
+    extra: {
+      motsCles: ['Double énonciation', 'Topos du coup de foudre', 'Prolepse tragique', 'Métaphore de la blessure', 'Fatalité divine'],
+      contextePlus: 'Manon Lescaut est un roman-mémoires, c\'est-à-dire que le narrateur raconte rétrospectivement. Cette technique de la double temporalité (passé de l\'action / présent de la narration) crée une ironie tragique permanente : le lecteur sait que tout finira mal, ce qui donne à chaque moment de bonheur une couleur mélancolique.'
+    }
+  },
+  't11': {
+    author: 'prevost',
+    ref: 'Texte 11 · Manon Lescaut',
+    title: '« Visite de M. de B... » — La visite au parloir',
+    introText: `Des Grieux a été enfermé au séminaire de Saint-Lazare par son père pour l'éloigner de Manon. Manon, de son côté, a accepté la protection d'un riche fermier général, M. de B..., pour subvenir à ses besoins. Cette scène montre la trahison de Manon révélée à Des Grieux dans le lieu même de sa réclusion.`,
+    introKw: [
+      { label: 'Contexte', text: 'Des Grieux enfermé à Saint-Lazare ; Manon sous la protection d\'un riche fermier.' },
+      { label: 'Enjeu', text: 'Révélation de la trahison ; ambivalence de l\'aliénation amoureuse.' }
+    ],
+    problematique: 'En quoi cette scène met-elle en scène la duplicité et la faiblesse des personnages face au désir ?',
+    texteIntegral: `Manon était coquette, et elle aimait l'abondance. Elle n'était point assez maîtresse d'elle-même pour <span class="m1p1">me sacrifier des commodités dont elle était idolâtre</span>. « <span class="m1p2">Je mourrai si tu continues de me mettre dans la nécessité de garder mes distances.</span> » J'ai à me plaindre d'elle, ce que <span class="m1p3">je ne puis penser sans pleurer.</span> Elle m'avait promis une fidélité entière, et elle venait de me tromper avec M. de B. Je <span class="m2p1">ne me souviens que de mes peines sans ordre ni mesure.</span> Que <span class="m2p2">n'eût-on pas dit de voir deux amants aussi malheureux l'un que l'autre</span> ? Tiberge vint me voir dans ma prison de Saint-Lazare. Il m'apporta l'affection d'un ami sincère. Je lui parlai <span class="m2p3">de ma passion avec la même chaleur que si j'eusse parlé du plus raisonnable dessein du monde.</span> Il m'écoutait d'un air de compassion. « <span class="m2p4">La beauté me cause une peine, une peine infinie.</span> » J'étais, continua Tiberge, dans la plus grande agitation de ma vie. <span class="m3p1">Mes résolutions chancellent selon les différents mouvements qui m'agitent.</span> <span class="m3p2">Ô Dieu ! est-il possible de perdre ainsi toute raison et toute liberté ?</span> Je sentais qu'il me restait assez <span class="m3p3">de bon sens pour juger que je devais tendre à la vertu</span>, mais je sentais aussi que je ne <span class="m3p4">voulais pas y tendre.</span> Cet état est <span class="m4p1">incompréhensible</span>, il est absurde, et je me sens prêt à le défendre. <span class="m4p2">Je ne me propose pas de travailler à ma guérison.</span> Je me porte mieux que jamais, <span class="m4p3">et je suis plus content de Manon</span> qu'il ne m'a jamais été.`,
+    mouvements: [
+      {
+        classe: 'mvt1', titre: 'Mouvement 1', soustitre: '— Le portrait de Manon : coquetterie et trahison (l. 1-5)',
+        procedes: [
+          { num: 1, cite: '« me sacrifier des commodités dont elle était idolâtre »', ref: '(l. 2)', citeClass: 'm1p1', analyse: 'Le <span class="procede-type">lexique religieux de l\'idolâtrie</span> appliqué aux « commodités » (= argent, luxe) révèle que Manon confond amour et confort matériel.' },
+          { num: 2, cite: '« Je mourrai si tu continues de me mettre dans la nécessité de garder mes distances »', ref: '(l. 3-4)', citeClass: 'm1p2', analyse: 'L\'<span class="procede-type">hyperbole dramatique</span> de Manon : le discours direct rapporté la montre manipulatrice, transformant ses propres infidélités en accusation contre Des Grieux.' },
+          { num: 3, cite: '« je ne puis penser sans pleurer »', ref: '(l. 5)', citeClass: 'm1p3', analyse: 'L\'<span class="procede-type">aveu pathétique du narrateur</span> rompt la narration et révèle la douleur encore vive du Des Grieux adulte.' }
+        ]
+      },
+      {
+        classe: 'mvt2', titre: 'Mouvement 2', soustitre: '— Le désordre de la douleur (l. 6-10)',
+        procedes: [
+          { num: 1, cite: '« je ne me souviens que de mes peines sans ordre ni mesure »', ref: '(l. 6)', citeClass: 'm2p1', analyse: 'La <span class="procede-type">métaphore du chaos mémoriel</span> montre que la douleur de la trahison défait la logique narrative elle-même, dérèglant le récit.' },
+          { num: 2, cite: '« Que n\'eût-on pas dit de voir deux amants aussi malheureux l\'un que l\'autre »', ref: '(l. 7)', citeClass: 'm2p2', analyse: 'La <span class="procede-type">question rhétorique appuyée sur le discours universel</span> fait du couple un topos de la passion malheureuse.' },
+          { num: 3, cite: '« de ma passion avec la même chaleur que si j\'eusse parlé du plus raisonnable dessein du monde »', ref: '(l. 9)', citeClass: 'm2p3', analyse: 'Le <span class="procede-type">paradoxe de la passion raisonnée</span> : Des Grieux présente sa folie amoureuse comme si elle était sage. Cette confusion est le cœur de l\'aliénation amoureuse.' },
+          { num: 4, cite: '« La beauté me cause une peine, une peine infinie »', ref: '(l. 10)', citeClass: 'm2p4', analyse: 'L\'<span class="procede-type">épanaphore de la douleur</span> (répétition de « peine ») intensifie la blessure de la trahison.' }
+        ]
+      },
+      {
+        classe: 'mvt3', titre: 'Mouvement 3', soustitre: '— Le conflit intérieur : raison contre passion (l. 11-14)',
+        procedes: [
+          { num: 1, cite: '« Mes résolutions chancellent »', ref: '(l. 11)', citeClass: 'm3p1', analyse: 'La <span class="procede-type">métaphore physique du chancellemnt</span> traduit l\'instabilité morale : Des Grieux ne peut pas résister à la tentation. Il est littéralement déséquilibré par sa passion.' },
+          { num: 2, cite: '« Ô Dieu ! est-il possible de perdre ainsi toute raison et toute liberté ? »', ref: '(l. 12)', citeClass: 'm3p2', analyse: 'L\'<span class="procede-type">apostrophe divine</span> : Des Grieux se tourne vers Dieu non pour se repentir, mais pour plaindre sa propre condition, révélant son incapacité à la vraie repentance.' },
+          { num: 3, cite: '« de bon sens pour juger que je devais tendre à la vertu »', ref: '(l. 13)', citeClass: 'm3p3', analyse: 'La <span class="procede-type">distinction raison/volonté</span> : Des Grieux comprend ce qui est bien mais ne veut pas le faire. C\'est la définition classique de l\'acrasie (faiblesse de la volonté).' },
+          { num: 4, cite: '« voulais pas y tendre »', ref: '(l. 14)', citeClass: 'm3p4', analyse: 'L\'<span class="procede-type">aveu direct de la faiblesse morale</span> est d\'une modernité surprenante : Des Grieux assume consciemment son choix du vice.' }
+        ]
+      },
+      {
+        classe: 'mvt4', titre: 'Mouvement 4', soustitre: '— La défense paradoxale de l\'aliénation (l. 15-18)',
+        procedes: [
+          { num: 1, cite: '« incompréhensible »', ref: '(l. 15)', citeClass: 'm4p1', analyse: 'Le <span class="procede-type">mot-pivot</span> : Des Grieux sait que son état est irrationnel, mais il ne veut pas en guérir. C\'est la lucidité douloureuse du libertin.' },
+          { num: 2, cite: '« Je ne me propose pas de travailler à ma guérison »', ref: '(l. 16)', citeClass: 'm4p2', analyse: 'La <span class="procede-type">métaphore médicale de la passion</span> : l\'amour est traité comme une maladie dont on refuse le traitement. Cet refus est la marque de la passion absolue.' },
+          { num: 3, cite: '« je suis plus content de Manon »', ref: '(l. 17)', citeClass: 'm4p3', analyse: 'La <span class="procede-type">conclusion paradoxale</span> : après avoir décrit la trahison et la souffrance, Des Grieux affirme être heureux. C\'est l\'aliénation portée à son comble.' }
+        ]
+      }
+    ],
+    conclusionFull: 'La scène met en lumière la psychologie complexe et moderne de Des Grieux : un homme qui sait qu\'il est dans l\'erreur mais qui refuse de s\'en sortir. Ce refus de la raison, assumé et défendu, préfigure les héros romantiques du XIXe siècle. La tension entre lucidité et aliénation est le ressort dramatique central de tout Manon Lescaut.',
+    conclusionItems: [
+      { label: 'Aliénation', text: 'Des Grieux sait qu\'il est dans l\'erreur mais refuse d\'en sortir.' },
+      { label: 'Modernité', text: 'La lucidité douloureuse préfigure les héros romantiques.' },
+      { label: 'Manon', text: 'Manipulatrice mais irrésistible : le double visage de la passion.' },
+      { label: 'Conflit', text: 'Raison vs volonté : la définition de l\'aliénation amoureuse.' }
+    ],
+    extra: {
+      motsCles: ['Acrasie (faiblesse de la volonté)', 'Métaphore médicale', 'Double énonciation', 'Paradoxe de la passion raisonnée', 'Préfiguration romantique'],
+      contextePlus: 'Cette scène est un morceau de bravoure de l\'analyse psychologique. Prévost anticipe les travaux modernes sur la psychologie de la dépendance affective. Des Grieux est le premier anti-héros lucide de la littérature française : il voit clairement sa chute et choisit de continuer.'
+    }
+  },
+  't12': {
+    author: 'prevost',
+    ref: 'Texte 12 · Manon Lescaut',
+    title: '« Mort de Manon » — La mort dans le désert',
+    introText: `Déportés en Louisiane pour leur conduite dissolue, Des Grieux et Manon tentent de fuir dans le désert américain. Épuisée, Manon meurt dans les bras de son amant, dans un dénuement total. Cette mort constitue le point culminant de l'élégie romanesque de Prévost : une mort sublime, dépouillée de tout spectacle, qui transforme la pécheresse en figure de sainteté.`,
+    introKw: [
+      { label: 'Contexte', text: 'Déportation en Louisiane ; fuite dans le désert américain.' },
+      { label: 'Enjeu', text: 'Mort élégiaque et sublime de Manon : rédemption et transfiguration.' }
+    ],
+    problematique: 'En quoi la mort de Manon constitue-t-elle une mort sublime et élégiaque ?',
+    texteIntegral: `Elle me fit asseoir auprès d'elle. Cher Des Grieux, me dit-elle, <span class="m1p1">il faut que je vous ouvre mon cœur.</span> J'ai à vous apprendre <span class="m1p2">des choses qui me sont dures à dire</span>, mais je me sens obligée de vous les déclarer avant que de mourir. <span class="m1p3">La tendresse que j'ai pour vous est extrême, et je ne puis me flatter qu'elle cesserait avec ma vie.</span> Vous avez été pour moi <span class="m2p1">l'objet d'une passion si forte, si naturelle</span>, si constante, si permanente… <span class="m2p2">Hélas ! que vous êtes mal récompensé de vos soins.</span> <span class="m2p3">Oui, je le sais, Des Grieux, j'ai causé tous vos malheurs.</span> Il me vient des remords amers de toutes mes infidélités. <span class="m2p4">Je me sens mourir avec regret de vous quitter</span>, mais avec une fermeté capable de vaincre la mort. <span class="m3p1">Je ne veux point vous laisser avec le souvenir de ma mort.</span> <span class="m3p2">Aimez une maîtresse qui soit plus digne de vous.</span> Aimez, Des Grieux, aimez. <span class="m3p3">Je serai heureuse de penser que vous serez consolé.</span> Ces mots m'étouffèrent par la douleur. Mes yeux, jusqu'alors secs, <span class="m4p1">laissèrent couler des ruisseaux de larmes.</span> J'embrassai ses mains, ses yeux, son visage. <span class="m4p2">Je me lamentai, je me désespérai.</span> Elle était aussi attendrie que moi. <span class="m4p3">Ses forces se dissipèrent.</span> <span class="m4p4">Elle expira.</span> <span class="m5p1">Ses mains froides et tremblantes, sa voix faible, ses dernières expressions</span> : <span class="m5p2">le serrement de ses mains... me fit connaître que la fin de ses malheurs approchait.</span> <span class="m5p3">N'exigez point de moi que je vous décrive mes sentiments, ni que je vous rapporte ses dernières expressions.</span> <span class="m5p4">Je la perdis.</span>`,
+    mouvements: [
+      {
+        classe: 'mvt1', titre: 'Mouvement 1', soustitre: '— L\'aveu de tendresse (l. 1-4)',
+        procedes: [
+          { num: 1, cite: '« il faut que je vous ouvre mon cœur »', ref: '(l. 2)', citeClass: 'm1p1', analyse: 'La <span class="procede-type">métaphore de l\'ouverture du cœur</span> : ce geste ultime transforme la mort en acte de sincérité absolue. C\'est la confession d\'une âme qui se rachète.' },
+          { num: 2, cite: '« des choses qui me sont dures à dire »', ref: '(l. 3)', citeClass: 'm1p2', analyse: 'L\'<span class="procede-type">litote de la douleur</span> : l\'euphémisme (« dures à dire ») accentue paradoxalement le poids des aveux.' },
+          { num: 3, cite: '« La tendresse que j\'ai pour vous est extrême »', ref: '(l. 4)', citeClass: 'm1p3', analyse: 'L\'<span class="procede-type">déclaration d\'amour ultime</span> : au seuil de la mort, Manon parvient enfin à exprimer pleinement et simplement son amour, sans calcul ni coquetterie.' }
+        ]
+      },
+      {
+        classe: 'mvt2', titre: 'Mouvement 2', soustitre: '— L\'aveu des torts (l. 5-9)',
+        procedes: [
+          { num: 1, cite: '« l\'objet d\'une passion si forte, si naturelle »', ref: '(l. 6)', citeClass: 'm2p1', analyse: 'L\'<span class="procede-type">accumulation de qualificatifs de l\'amour pur</span> rachète rétrospectivement toutes les infidélités de Manon.' },
+          { num: 2, cite: '« Hélas ! que vous êtes mal récompensé de vos soins »', ref: '(l. 7)', citeClass: 'm2p2', analyse: 'L\'<span class="procede-type">exclamation pathétique</span> signale que Manon mesure, pour la première fois clairement, l\'injustice de ce qu\'elle a fait à Des Grieux.' },
+          { num: 3, cite: '« Oui, je le sais, Des Grieux, j\'ai causé tous vos malheurs »', ref: '(l. 8)', citeClass: 'm2p3', analyse: 'La <span class="procede-type">reconnaissance explicite des torts</span> est la grande nouveauté de cette mort : Manon se repent sincèrement, ce qui est unique dans le roman.' },
+          { num: 4, cite: '« Je me sens mourir avec regret de vous quitter »', ref: '(l. 9)', citeClass: 'm2p4', analyse: 'La <span class="procede-type">formule de la mort consciente</span> : Manon sait qu\'elle va mourir. Ce savoir transforme l\'agonie en acte de lucidité stoïcienne.' }
+        ]
+      },
+      {
+        classe: 'mvt3', titre: 'Mouvement 3', soustitre: '— L\'injonction au bonheur futur (l. 10-13)',
+        procedes: [
+          { num: 1, cite: '« Je ne veux point vous laisser avec le souvenir de ma mort »', ref: '(l. 10)', citeClass: 'm3p1', analyse: 'L\'<span class="procede-type">altruisme de l\'agonisante</span> : dans ses derniers instants, Manon pense non à elle-même mais au bonheur futur de Des Grieux. C\'est la transformation de la coquette en sainte.' },
+          { num: 2, cite: '« Aimez une maîtresse qui soit plus digne de vous »', ref: '(l. 11)', citeClass: 'm3p2', analyse: 'L\'<span class="procede-type">injonction au bonheur</span> : Manon, par cet acte désintéressé, s\'efface elle-même pour permettre la vie de Des Grieux. C\'est le sacrifice suprême.' },
+          { num: 3, cite: '« Je serai heureuse de penser que vous serez consolé »', ref: '(l. 13)', citeClass: 'm3p3', analyse: 'Cette <span class="procede-type">projection dans la mort</span> révèle une sérénité spirituelle : Manon, même morte, continuera à vivre dans la pensée de Des Grieux comme gardienne bienveillante.' }
+        ]
+      },
+      {
+        classe: 'mvt4', titre: 'Mouvement 4', soustitre: '— La douleur du narrateur (l. 14-17)',
+        procedes: [
+          { num: 1, cite: '« laissèrent couler des ruisseaux de larmes »', ref: '(l. 15)', citeClass: 'm4p1', analyse: 'L\'<span class="procede-type">hyperbole aquatique des larmes</span> marque la fin de la retenue : Des Grieux perd tout contrôle, sa dignité romanesque s\'effondre face à la mort de Manon.' },
+          { num: 2, cite: '« Je me lamentai, je me désespérai »', ref: '(l. 16)', citeClass: 'm4p2', analyse: 'La <span class="procede-type">répétition amplificatrice</span> : les deux verbes à la première personne, juxtaposés sans coordination, miment l\'absence de contrôle et l\'effondrement.' },
+          { num: 3, cite: '« Ses forces se dissipèrent »', ref: '(l. 17)', citeClass: 'm4p3', analyse: 'La <span class="procede-type">métaphore physique du dépérissement</span> évoque la mort comme une dissipation progressive de la vie, non comme une rupture brutale.' },
+          { num: 4, cite: '« Elle expira »', ref: '(l. 17)', citeClass: 'm4p4', analyse: 'La <span class="procede-type">brièveté fulminante de la mort</span> : deux mots suffisent à dire la mort de Manon. Cette concision extrême est la marque du sublime classique.' }
+        ]
+      },
+      {
+        classe: 'mvt5', titre: 'Mouvement 5', soustitre: '— L\'indicible de la perte (l. 18-22)',
+        procedes: [
+          { num: 1, cite: '« mains... froides et tremblantes », « voix faible », « dernières expressions »', ref: '(l. 22-24)', citeClass: 'm5p1', analyse: 'Le <span class="procede-type">champ lexical de l\'agonie clinique</span> : le sublime s\'ancre dans un réalisme médical très sobre. Le corps lâche prise progressivement, faisant de la mort un processus concret et poignant.' },
+          { num: 2, cite: '« le serrement de ses mains... me fit connaître que la fin de ses malheurs approchait »', ref: '(l. 27-28)', citeClass: 'm5p2', analyse: 'La <span class="procede-type">synecdoque affective (le langage du corps)</span> : la parole a disparu. La communication ultime entre les amants passe uniquement par une étreinte silencieuse, poignante et désespérée.' },
+          { num: 3, cite: '« N\'exigez point de moi que je vous décrive mes sentiments, ni que je vous rapporte ses dernières expressions »', ref: '(l. 28-29)', citeClass: 'm5p3', analyse: 'La <span class="procede-type">prétérition (l\'indicible sublime)</span> : le narrateur refuse de tout dire. La douleur est trop grande pour le langage humain. Ce silence respectueux est la marque du sublime classique.' },
+          { num: 4, cite: '« Je la perdis » / « de ce fatal et déplorable événement »', ref: '(l. 29-31)', citeClass: 'm5p4', analyse: 'L\'<span class="procede-type">euphémisme final et litote</span> : Prévost refuse le mot brutal « morte ». La mort de Manon s\'achève sur une disparition délicate, laissant le narrateur vidé de toute substance vitale.' }
+        ]
+      }
+    ],
+    conclusionFull: 'Le récit de la mort de Manon répond à une esthétique du sublime par son intense élégie. Abbé Prévost refuse le sang, le morbide ou le spectaculaire. Il place ses personnages dans un dénuement absolu où Manon se rachète par l\'abnégation et le sacrifice. La plainte lyrique du narrateur, mêlée au silence pudique entourant le dernier souffle (la prétérition et l\'euphémisme), transforme la mort d\'une pécheresse en une assomption quasi sainte, fixant Des Grieux dans une douleur éternelle.',
+    conclusionItems: [
+      { label: 'Rédemption', text: 'Manon se rachète par l\'abnégation absolue : du vice à la sainteté.' },
+      { label: 'Sublime', text: 'Dénuement total du décor et des personnages, refus du spectaculaire.' },
+      { label: 'Indicible', text: 'Prétérition et euphémisme : le silence pudique comme marque de la douleur extrême.' },
+      { label: 'Élégie', text: 'Des Grieux narrateur, figé dans sa douleur éternelle, raconte une mort comme une seconde mort.' }
+    ],
+    extra: {
+      motsCles: ['Prétérition (l\'indicible)', 'Euphémisme (« Je la perdis »)', 'Élégie romanesque', 'Sublime classique', 'Rédemption de Manon'],
+      contextePlus: 'La mort de Manon dans le désert américain est l\'une des scènes les plus célèbres de la littérature du XVIIIe siècle. Le décor du désert (inconnu du lecteur français) ajoute une dimension exotique et absolue au dénuement des personnages. Prévost fait de la mort un acte poétique : Manon, en mourant, devient pure.'
+    }
+  }
+};
+
+// ======================================================
+//  NAVIGATION
+// ======================================================
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showAuthor(authorKey) {
+  showPage('page-author-' + authorKey);
+}
+
+let currentTextAuthor = null;
+
+function showText(authorKey, textKey) {
+  currentTextAuthor = authorKey;
+  const text = TEXTS[textKey];
+  const author = AUTHORS[authorKey];
+
+  // Update back button
+  document.getElementById('text-back-btn').textContent = '← ' + author.name;
+  document.getElementById('text-back-btn').onclick = function() { showAuthor(authorKey); };
+  document.getElementById('text-bar-title').textContent = text.title;
+  document.getElementById('text-bar-sub').textContent = text.ref;
+
+  // Build content
+  document.getElementById('text-content').innerHTML = buildTextPage(text, author, authorKey);
+
+  showPage('page-text');
+
+  // Init accordions
+  initAccordions();
+}
+
+function buildTextPage(text, author, authorKey) {
+  let html = '';
+
+  // Problématique visible en en-tête
+  html += `<div class="prob-visible" style="margin: 20px 0 8px;">
+    <div class="prob-label">Problématique</div>
+    <p>${text.problematique}</p>
+  </div>`;
+
+  // ---- Accord : Intro Auteur
+  html += `<div class="accord" id="accord-intro-author">
+    <div class="accord-header" onclick="toggleAccord('accord-intro-author')">
+      <div class="accord-header-left">
+        <div class="accord-icon intro-author">👤</div>
+        <div>
+          <div class="accord-title">Introduction à l'auteur</div>
+          <div class="accord-subtitle">${author.name} — ${author.work}</div>
+        </div>
+      </div>
+      <div class="accord-arrow">▾</div>
+    </div>
+    <div class="accord-body">
+      <div class="accord-inner">
+        <div class="intro-full">${author.intro}</div>
+      </div>
+    </div>
+  </div>`;
+
+  // ---- Accord : Intro Texte
+  html += `<div class="accord" id="accord-intro-text">
+    <div class="accord-header" onclick="toggleAccord('accord-intro-text')">
+      <div class="accord-header-left">
+        <div class="accord-icon intro-text">📖</div>
+        <div>
+          <div class="accord-title">Introduction au texte</div>
+          <div class="accord-subtitle">${text.title}</div>
+        </div>
+      </div>
+      <div class="accord-arrow">▾</div>
+    </div>
+    <div class="accord-body">
+      <div class="accord-inner">
+        <div class="intro-full">${text.introText}</div>
+        <div class="intro-keywords">`;
+  text.introKw.forEach(kw => {
+    html += `<div class="intro-kw-item ${authorKey}">
+      <div class="kw-label">${kw.label}</div>
+      <p>${kw.text}</p>
+    </div>`;
+  });
+  html += `</div></div></div></div>`;
+
+  // ---- Accord : Texte intégral
+  html += `<div class="accord" id="accord-texte">
+    <div class="accord-header" onclick="toggleAccord('accord-texte')">
+      <div class="accord-header-left">
+        <div class="accord-icon text-full">📜</div>
+        <div>
+          <div class="accord-title">Texte intégral</div>
+          <div class="accord-subtitle">Avec surlignage par mouvement</div>
+        </div>
+      </div>
+      <div class="accord-arrow">▾</div>
+    </div>
+    <div class="accord-body">
+      <div class="accord-inner">
+        <div class="legend-box">
+          <div class="legend-title">Légende des couleurs</div>
+          <div class="legend-items">
+            <div class="legend-item"><div class="legend-swatch m1p1"></div> Mvt 1</div>
+            <div class="legend-item"><div class="legend-swatch m2p1"></div> Mvt 2</div>
+            <div class="legend-item"><div class="legend-swatch m3p1"></div> Mvt 3</div>
+            <div class="legend-item"><div class="legend-swatch m4p1"></div> Mvt 4</div>
+            <div class="legend-item"><div class="legend-swatch m5p1"></div> Mvt 5</div>
+          </div>
+        </div>
+        <div class="texte-integral">${text.texteIntegral}</div>
+      </div>
+    </div>
+  </div>`;
+
+  // ---- Accords par mouvement
+  const mvtColors = ['mvt1', 'mvt2', 'mvt3', 'mvt4', 'mvt5'];
+  const mvtIcons = ['🔵', '🟢', '🟠', '🟣', '🔴'];
+  text.mouvements.forEach((mvt, idx) => {
+    const cls = mvtColors[idx] || 'mvt1';
+    const icon = mvtIcons[idx] || '🔵';
+    let procHtml = '';
+    mvt.procedes.forEach(p => {
+      const citeCls = p.citeClass ? ` class="procede-citation ${p.citeClass}"` : ' class="procede-citation"';
+      procHtml += `<div class="procede-row">
+        <div class="procede-num n${p.num} ${cls}">${p.num}</div>
+        <div>
+          <span${citeCls}>« ${p.cite.replace(/^«\s*/, '').replace(/\s*»$/, '')} »</span>
+          <span class="procede-ref">${p.ref}</span>
+          <span class="procede-analyse">${p.analyse}</span>
+        </div>
+      </div>`;
+    });
+    html += `<div class="accord" id="accord-mvt-${idx}">
+      <div class="accord-header" onclick="toggleAccord('accord-mvt-${idx}')">
+        <div class="accord-header-left">
+          <div class="accord-icon movement">${icon}</div>
+          <div>
+            <div class="accord-title">${mvt.titre} ${mvt.soustitre}</div>
+            <div class="accord-subtitle">${mvt.procedes.length} procédés analysés</div>
+          </div>
+        </div>
+        <div class="accord-arrow">▾</div>
+      </div>
+      <div class="accord-body">
+        <div class="accord-inner">
+          <div class="mouvement-block">
+            <div class="mouvement-title ${cls}">${mvt.titre} <span>${mvt.soustitre}</span></div>
+            ${procHtml}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  // ---- Accord : Conclusion
+  let concItemsHtml = '';
+  text.conclusionItems.forEach(item => {
+    concItemsHtml += `<div class="conclusion-item"><div class="conc-label">${item.label}</div><p>${item.text}</p></div>`;
+  });
+  html += `<div class="accord" id="accord-conclusion">
+    <div class="accord-header" onclick="toggleAccord('accord-conclusion')">
+      <div class="accord-header-left">
+        <div class="accord-icon conclusion">✅</div>
+        <div>
+          <div class="accord-title">Conclusion</div>
+          <div class="accord-subtitle">Bilan de l'analyse linéaire</div>
+        </div>
+      </div>
+      <div class="accord-arrow">▾</div>
+    </div>
+    <div class="accord-body">
+      <div class="accord-inner">
+        <div class="conclusion-full">${text.conclusionFull}</div>
+        <div class="conclusion-grid">${concItemsHtml}</div>
+      </div>
+    </div>
+  </div>`;
+
+  // ---- Accord : Informations supplémentaires
+  let motsClesHtml = text.extra.motsCles.map(m => `<span class="mot-cle" style="background:var(--surface2);color:var(--text-muted);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;display:inline-block;margin:2px;">${m}</span>`).join(' ');
+  html += `<div class="accord" id="accord-extra">
+    <div class="accord-header" onclick="toggleAccord('accord-extra')">
+      <div class="accord-header-left">
+        <div class="accord-icon extra">💡</div>
+        <div>
+          <div class="accord-title">Informations supplémentaires</div>
+          <div class="accord-subtitle">Mots-clés · Contexte approfondi</div>
+        </div>
+      </div>
+      <div class="accord-arrow">▾</div>
+    </div>
+    <div class="accord-body">
+      <div class="accord-inner">
+        <div class="section-label">Mots-clés essentiels</div>
+        <div style="margin-bottom:14px;">${motsClesHtml}</div>
+        <div class="section-label">Contexte approfondi</div>
+        <div class="intro-full">${text.extra.contextePlus}</div>
+      </div>
+    </div>
+  </div>`;
+
+  return html;
+}
+
+// ======================================================
+//  ACCORDIONS
+// ======================================================
+function toggleAccord(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('open');
+}
+
+function initAccordions() {
+  // Reset all (they are re-created by JS, nothing to do)
+}
+
+// ======================================================
+//  PAGE : TOUT LE LIVRET
+// ======================================================
+function buildAllPage() {
+  const authorOrder = ['corneille', 'fontenelle', 'rimbaud', 'prevost'];
+  const authorTexts = {
+    corneille: ['t1', 't2', 't3'],
+    fontenelle: ['t4', 't5', 't6'],
+    rimbaud: ['t7', 't8', 't9'],
+    prevost: ['t10', 't11', 't12']
+  };
+
+  let html = '';
+  authorOrder.forEach(aKey => {
+    const author = AUTHORS[aKey];
+    html += `<div class="oeuvre-header ${aKey}" style="border-radius:20px;padding:28px 34px;margin:30px 0 18px;color:white;position:relative;overflow:hidden;">
+      <div class="oeuvre-num" style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:8px;">Auteur</div>
+      <div style="font-family:Georgia,serif;font-size:22px;font-weight:700;margin-bottom:4px;">${author.name}</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.68);">${author.work}</div>
+    </div>`;
+    authorTexts[aKey].forEach(tKey => {
+      const text = TEXTS[tKey];
+      html += `<div style="background:var(--surface);border-radius:14px;box-shadow:0 3px 18px var(--shadow);margin-bottom:28px;overflow:hidden;border:1px solid var(--border);">
+        <div style="padding:18px 24px;border-bottom:1px solid var(--border);">
+          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);margin-bottom:4px;">${text.ref}</div>
+          <div style="font-family:Georgia,serif;font-size:18px;color:var(--text);margin-bottom:10px;">${text.title}</div>
+          <div class="intro-full">${text.introText}</div>
+          <div class="problematique-box" style="margin-top:10px;">
+            <div class="prob-label">Problématique</div>
+            <p>${text.problematique}</p>
+          </div>
+        </div>
+        <div style="padding:18px 24px;border-bottom:1px solid var(--border);">
+          <div class="section-label">Texte intégral</div>
+          <div class="texte-integral">${text.texteIntegral}</div>
+        </div>
+        <div style="padding:18px 24px;border-bottom:1px solid var(--border);">
+          <div class="section-label">Analyse linéaire</div>`;
+      text.mouvements.forEach((mvt, idx) => {
+        const cls = ['mvt1','mvt2','mvt3','mvt4','mvt5'][idx] || 'mvt1';
+        html += `<div class="mouvement-block"><div class="mouvement-title ${cls}">${mvt.titre} <span>${mvt.soustitre}</span></div>`;
+        mvt.procedes.forEach(p => {
+          const citeCls = p.citeClass ? ` class="procede-citation ${p.citeClass}"` : ' class="procede-citation"';
+          html += `<div class="procede-row">
+            <div class="procede-num n${p.num} ${cls}">${p.num}</div>
+            <div>
+              <span${citeCls}>« ${p.cite.replace(/^«\s*/, '').replace(/\s*»$/, '')} »</span>
+              <span class="procede-ref">${p.ref}</span>
+              <span class="procede-analyse">${p.analyse}</span>
+            </div>
+          </div>`;
+        });
+        html += `</div>`;
+      });
+      html += `</div>
+        <div style="padding:18px 24px;background:var(--surface2);">
+          <div class="section-label">Conclusion</div>
+          <div class="conclusion-full">${text.conclusionFull}</div>
+          <div class="conclusion-grid">`;
+      text.conclusionItems.forEach(item => {
+        html += `<div class="conclusion-item"><div class="conc-label">${item.label}</div><p>${item.text}</p></div>`;
+      });
+      html += `</div></div></div>`;
+    });
+  });
+  return html;
+}
+
+document.getElementById('all-content').innerHTML = buildAllPage();
+
+// ======================================================
+//  DARK MODE
+// ======================================================
+const modeBtn = document.getElementById('modeBtn');
+const saved = localStorage.getItem('theme');
+if (saved === 'dark') {
+  document.body.classList.add('dark');
+  modeBtn.textContent = '☀️ Mode Clair';
+}
+modeBtn.addEventListener('click', function() {
+  const isDark = document.body.classList.contains('dark');
+  document.body.classList.toggle('dark');
+  this.textContent = isDark ? '🌙 Mode Sombre' : '☀️ Mode Clair';
+  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+});
+</script>
+
+</body>
+</html>
